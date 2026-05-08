@@ -1,0 +1,19 @@
+name: Check Feature Solution Files
+run-name: 'Solution File Guard: ${{ github.head_ref }} → ${{ github.base_ref }}'
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches:
+      - develop
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    uses: mikefactorial/Agentic-ALM-Workflows/.github/workflows/check-feature-solution-files.yml@main
+    with:
+      base_ref: ${{ github.event.pull_request.base.ref }}
+      head_sha: ${{ github.sha }}

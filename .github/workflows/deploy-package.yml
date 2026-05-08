@@ -1,0 +1,48 @@
+﻿name: Deploy Package
+
+run-name: 'Deploy ${{ inputs.package }} → ${{ inputs.environment }} (${{ inputs.release_tag || ''latest'' }})'
+
+# Manual deployment workflow — choose a package and a target environment.
+#
+# The package-to-solutions mapping is defined in:
+#   deployments/settings/environment-config.json
+#
+# Per-environment GitHub variables required (Settings → Environments, or repository
+# variables scoped by environment name):
+#   DATAVERSE_URL        — e.g. https://{envPrefix}-tst-{tenantSlug}.crm.dynamics.com/
+#   AZURE_TENANT_ID      — Azure AD tenant ID
+#   DATAVERSE_CLIENT_ID  — Service principal application (client) ID
+#
+# Authentication uses GitHub OIDC federated credentials (id-token: write below).
+# No client secret is required.
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Target environment slug (see deployments/settings/environment-config.json environments[*].slug)'
+        required: true
+        type: string
+      package:
+        description: 'Package group to deploy (see deployments/settings/environment-config.json packageGroups[*].name)'
+        required: true
+        type: string
+      release_tag:
+        description: 'Release tag to deploy (e.g. v2026.04.05.1). Leave blank for latest.'
+        required: false
+        type: string
+        default: ''
+
+permissions:
+  contents: read
+  id-token: write
+  actions: read
+
+jobs:
+  deploy-package:
+    uses: mikefactorial/Agentic-ALM-Workflows/.github/workflows/deploy-package.yml@main
+    with:
+      environment: ${{ inputs.environment }}
+      package: ${{ inputs.package }}
+      release_tag: ${{ inputs.release_tag || '' }}
+    secrets: inherit

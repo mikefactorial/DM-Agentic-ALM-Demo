@@ -1,0 +1,22 @@
+﻿name: Validate Pull Request Changes
+run-name: 'PR #${{ github.event.pull_request.number }}: ${{ github.event.pull_request.title }}'
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write
+  id-token: write
+
+jobs:
+  validate:
+    uses: mikefactorial/Agentic-ALM-Workflows/.github/workflows/validate-pull-request.yml@main
+    with:
+      base_ref: ${{ github.event.pull_request.base.ref }}
+      head_ref: ${{ github.event.pull_request.head.ref }}
+      pr_number: ${{ github.event.pull_request.number }}
+      dev_environment: ${{ vars.PR_VALIDATION_INTEGRATION_ENV }}
+    secrets: inherit

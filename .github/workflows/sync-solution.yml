@@ -1,0 +1,52 @@
+﻿name: Sync Solution
+
+run-name: 'Syncing ${{ inputs.solution_name }} from ${{ inputs.environment }}'
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment slug to sync from (see deployments/settings/environment-config.json innerLoopEnvironments[*].slug)'
+        required: true
+        type: string
+      solution_name:
+        description: 'Solution unique name to sync'
+        required: true
+        type: string
+      commit_message:
+        description: 'Git commit message'
+        required: true
+        type: string
+        default: 'chore: automated solution sync'
+      branch_name:
+        description: 'Branch name to commit to'
+        required: false
+        type: string
+        default: 'develop'
+      publish_customizations:
+        description: 'Publish customizations before syncing'
+        required: false
+        type: boolean
+        default: true
+      create_pr:
+        description: 'Open a pull request instead of committing directly to branch_name'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  id-token: write
+  pull-requests: write
+
+jobs:
+  sync-solution:
+    uses: mikefactorial/Agentic-ALM-Workflows/.github/workflows/sync-solution.yml@main
+    with:
+      environment: ${{ inputs.environment }}
+      solution_name: ${{ inputs.solution_name }}
+      commit_message: ${{ inputs.commit_message }}
+      branch_name: ${{ inputs.branch_name }}
+      publish_customizations: ${{ inputs.publish_customizations }}
+      create_pr: ${{ inputs.create_pr }}
+    secrets: inherit

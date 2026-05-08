@@ -1,0 +1,74 @@
+name: Build and Create Release Package
+
+run-name: 'Create Release Package ${{ inputs.package_version || ''auto'' }}'
+
+# Builds the Power Platform Package Deployer deployment packages and creates a
+# GitHub Release with all package ZIPs and per-environment deployment settings
+# files attached.
+#
+# The package project (PlatformPackage.csproj) builds all referenced solution (.cdsproj)
+# projects, which in turn build plugins and PCF controls — so no separate plugin/solution
+# build jobs are needed here.
+#
+# Package groups are defined in deployments/settings/environment-config.json (packageGroups[]).
+# Each group produces unmanaged + managed editions.
+#
+# Triggers:
+#   - Push to main (automatic release on every merge)
+#   - Manual workflow_dispatch (ad-hoc with full control over version)
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+    inputs:
+      package_version:
+        description: 'Version (e.g. 1.2.3). Leave blank to auto-calculate from git tags.'
+        required: false
+        type: string
+        default: ''
+      create_release:
+        description: 'Create a GitHub Release with the package artifacts'
+        required: false
+        type: boolean
+        default: true
+      draft_release:
+        description: 'Create release as a draft (review before publishing)'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  id-token: write
+  actions: read
+
+jobs:
+  check-configured:
+    name: Check repo is configured
+    runs-on: ubuntu-latest
+    outputs:
+      ready: ${{ steps.check.outputs.ready }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Detect unreplaced placeholders
+        id: check
+        run: |
+          if grep -q '{{' deployments/settings/environment-config.json; then
+            echo "⚠️ environment-config.json still contains {{PLACEHOLDER}} values — skipping release build until setup is complete."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+  call-workflow:
+    needs: check-configured
+    if: needs.check-configured.outputs.ready == 'true'
+    uses: mikefactorial/Agentic-ALM-Workflows/.github/workflows/create-release-package.yml@main
+    with:
+      package_version: ${{ inputs.package_version || '' }}
+      create_release: ${{ github.event_name == 'push' || inputs.create_release == true }}
+      draft_release: ${{ inputs.draft_release == true }}
+    secrets: inherit

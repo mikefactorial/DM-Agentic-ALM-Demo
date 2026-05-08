@@ -1,0 +1,8 @@
+{
+  "$comment": "Per-environment values for Dataverse environment variables. Key = schema name of the environment variable, Value = { environment-slug: value }. Updated when new environment variables are added to solutions.",
+  "$schema": {
+    "SchemaName_of_EnvironmentVariable": {
+      "env-slug": "value"
+    }
+  }
+}

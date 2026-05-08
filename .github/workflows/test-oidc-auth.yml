@@ -1,0 +1,24 @@
+name: Test OIDC Authentication
+run-name: 'Test OIDC Auth for ${{ inputs.environment }}'
+
+# This workflow validates that federated credentials are correctly configured
+# for GitHub Server OIDC authentication to Azure
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'GitHub Environment Name to test'
+        required: true
+        type: string
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  test-authentication:
+    uses: mikefactorial/Agentic-ALM-Workflows/.github/workflows/test-oidc-auth.yml@main
+    with:
+      environment: ${{ inputs.environment }}
+    secrets: inherit

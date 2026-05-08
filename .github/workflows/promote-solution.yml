@@ -1,0 +1,72 @@
+name: Promote Solution
+
+run-name: 'Promoting ${{ inputs.source_solution_name }} from ${{ inputs.source_environment }} to ${{ inputs.target_environment }}'
+
+# Workflow to promote a solution from one environment to another
+# Exports from source, imports to target, and copies components to a target solution
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_environment:
+        description: 'Source environment slug to export from (see deployments/settings/environment-config.json innerLoopEnvironments[*].slug)'
+        required: true
+        type: string
+      target_environment:
+        description: 'Target environment slug to import to (see deployments/settings/environment-config.json innerLoopEnvironments[*].slug)'
+        required: true
+        type: string
+      source_solution_name:
+        description: 'Source solution unique name to export'
+        required: true
+        type: string
+      target_solution_name:
+        description: 'Target solution unique name to copy components into'
+        required: true
+        type: string
+      sync_target_solution:
+        description: 'Sync target solution to repository after promote'
+        required: false
+        type: boolean
+        default: false
+      sync_commit_message:
+        description: 'Commit message for solution sync (if sync is enabled)'
+        required: false
+        type: string
+        default: 'chore: automated solution sync after promote'
+      sync_branch_name:
+        description: 'Branch name for solution sync (if sync is enabled)'
+        required: false
+        type: string
+        default: 'develop'
+      publish_customizations:
+        description: 'Publish customizations before exporting from source environment'
+        required: false
+        type: boolean
+        default: true
+      sync_create_pr:
+        description: 'Open a pull request for the sync instead of committing directly to sync_branch_name'
+        required: false
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+  id-token: write
+  actions: read
+  pull-requests: write
+
+jobs:
+  promote:
+    uses: mikefactorial/Agentic-ALM-Workflows/.github/workflows/promote-solution.yml@main
+    with:
+      source_environment: ${{ inputs.source_environment }}
+      target_environment: ${{ inputs.target_environment }}
+      source_solution_name: ${{ inputs.source_solution_name }}
+      target_solution_name: ${{ inputs.target_solution_name }}
+      sync_target_solution: ${{ inputs.sync_target_solution }}
+      sync_commit_message: ${{ inputs.sync_commit_message }}
+      sync_branch_name: ${{ inputs.sync_branch_name }}
+      sync_create_pr: ${{ inputs.sync_create_pr }}
+      publish_customizations: ${{ inputs.publish_customizations }}
+    secrets: inherit

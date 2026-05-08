@@ -1,0 +1,13 @@
+{
+  "extraKnownMarketplaces": {
+    "agentic-alm": {
+      "source": {
+        "source": "github",
+        "repo": "mikefactorial/Agentic-ALM-Workflows"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "power-platform-alm@agentic-alm": true
+  }
+}

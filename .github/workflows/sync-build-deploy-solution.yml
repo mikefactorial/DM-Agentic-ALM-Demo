@@ -1,0 +1,69 @@
+name: Sync, Build, and Deploy Solution
+
+run-name: 'Sync ${{ inputs.solution_name }} from ${{ inputs.source_environment }} → Deploy to ${{ inputs.target_environments }}'
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_environment:
+        description: 'Source dev environment slug to sync from (see deployments/settings/environment-config.json innerLoopEnvironments[*].slug)'
+        required: true
+        type: string
+      solution_name:
+        description: 'Solution unique name to sync, build, and deploy'
+        required: true
+        type: string
+      target_environments:
+        description: 'Target environments to deploy to (comma-separated, see environment-config.json environments[*].slug)'
+        required: true
+        type: string
+      publish_customizations:
+        description: 'Publish customizations before syncing'
+        required: false
+        type: boolean
+        default: true
+      branch_name:
+        description: 'Branch name to commit synced solution to'
+        required: false
+        type: string
+        default: 'develop'
+      commit_message:
+        description: 'Git commit message for the sync'
+        required: false
+        type: string
+        default: 'chore: automated solution sync'
+      continue_on_error:
+        description: 'Continue deploying remaining environments if one fails'
+        required: false
+        type: boolean
+        default: false
+      use_upgrade:
+        description: 'Use single-stage upgrade for existing solutions'
+        required: false
+        type: boolean
+        default: false
+      create_pr:
+        description: 'Open a pull request for the sync instead of committing directly to branch_name'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  id-token: write
+  pull-requests: write
+
+jobs:
+  sync-build-deploy:
+    uses: mikefactorial/Agentic-ALM-Workflows/.github/workflows/sync-build-deploy-solution.yml@main
+    with:
+      source_environment: ${{ inputs.source_environment }}
+      solution_name: ${{ inputs.solution_name }}
+      target_environments: ${{ inputs.target_environments }}
+      publish_customizations: ${{ inputs.publish_customizations }}
+      branch_name: ${{ inputs.branch_name }}
+      commit_message: ${{ inputs.commit_message }}
+      continue_on_error: ${{ inputs.continue_on_error }}
+      use_upgrade: ${{ inputs.use_upgrade }}
+      create_pr: ${{ inputs.create_pr }}
+    secrets: inherit

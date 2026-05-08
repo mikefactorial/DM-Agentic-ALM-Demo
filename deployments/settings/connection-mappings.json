@@ -1,0 +1,8 @@
+{
+  "$comment": "Maps connector types to per-environment connection IDs. Key = connector type (from Extract-ConnectorTypes.ps1), Value = { environment-slug: connection-id }. Updated when new connection references are added to solutions.",
+  "$schema": {
+    "connectorType": {
+      "env-slug": "connection-id"
+    }
+  }
+}

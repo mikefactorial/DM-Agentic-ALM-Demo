@@ -1,0 +1,43 @@
+﻿name: Build and Deploy Solution
+run-name: 'Build ${{ inputs.solution_name }} → Deploy to ${{ inputs.target_environments }}'
+
+on:
+  workflow_dispatch:
+    inputs:
+      solution_name:
+        description: 'Solution unique name to build and deploy'
+        required: true
+        type: string
+      target_environments:
+        description: 'Target environments to deploy to (comma-separated, see environment-config.json environments[*].slug)'
+        required: true
+        type: string
+      continue_on_error:
+        description: 'Continue deploying remaining environments if one fails'
+        required: false
+        type: boolean
+        default: false
+      use_upgrade:
+        description: 'Use single-stage upgrade for existing solutions'
+        required: false
+        type: boolean
+        default: false
+      data_solution_name:
+        description: 'Primary solution name whose config data to import after deploy (e.g. slp_MyNewFeature). Leave empty to skip.'
+        required: false
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  build-deploy:
+    uses: mikefactorial/Agentic-ALM-Workflows/.github/workflows/build-deploy-solution.yml@main
+    with:
+      solution_name: ${{ inputs.solution_name }}
+      target_environments: ${{ inputs.target_environments }}
+      continue_on_error: ${{ inputs.continue_on_error }}
+      use_upgrade: ${{ inputs.use_upgrade }}
+      data_solution_name: ${{ inputs.data_solution_name }}
+    secrets: inherit

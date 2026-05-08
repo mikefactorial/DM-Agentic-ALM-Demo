@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <AssemblyTitle>PlatformPackage</AssemblyTitle>
+    <Product>PlatformPackage</Product>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="PkgAssets\ImportConfig.xml" />
+    <Content Include="PkgAssets\manifest.ppkg.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.PowerApps.MSBuild.PDPackage" Version="1.*">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.CrmSdk.XrmTooling.CoreAssembly" Version="9.1.1.65" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.CrmSdk.XrmTooling.PackageDeployment" Version="9.1.0.184" PrivateAssets="all" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.IO.Compression" />
+  </ItemGroup>
+
+  <!--
+    SETUP: Add one ProjectReference per solution in this package.
+    Each entry must point to the solution's .cdsproj file.
+    ReferenceOutputAssembly="false" tells MSBuild this is a content dependency, not a code dependency.
+    ImportOrder controls the order solutions are imported — lower numbers first (core/base solution must be lowest).
+
+    Single-solution example:
+    <ItemGroup>
+      <ProjectReference Include="../../../src/solutions/acm_AcmePlatform/acm_AcmePlatform.cdsproj"
+                        ReferenceOutputAssembly="false" ImportOrder="1" ImportMode="async" />
+    </ItemGroup>
+
+    Multi-solution example (core first):
+    <ItemGroup>
+      <ProjectReference Include="../../../src/solutions/acm_CoreSolution/acm_CoreSolution.cdsproj"
+                        ReferenceOutputAssembly="false" ImportOrder="1" ImportMode="async" />
+      <ProjectReference Include="../../../src/solutions/acm_AddOn/acm_AddOn.cdsproj"
+                        ReferenceOutputAssembly="false" ImportOrder="2" ImportMode="async" />
+    </ItemGroup>
+
+    Note: paths are relative from this .csproj location (deployments/package/Deployer/).
+    Repo root is ../../../ from here.
+  -->
+
+</Project>

@@ -1,43 +1,41 @@
 {
   "$comment": "Central platform configuration — the only file a new client must edit. Defines solution areas, all environments (with URLs), and deployment packages. Scripts and workflows read from here instead of having hardcoded values.",
-  "clientName": "{{CLIENT_NAME}}",
-  "productDescription": "{{PRODUCT_DESCRIPTION}}",
-  "githubOrg": "{{GITHUB_ORG}}",
-  "repoName": "{{REPO_NAME}}",
-  "publisher": "{{PUBLISHER}}",
-  "packageTag": "{{PACKAGE_TAG}}",
-  "trackingSystem": "azureBoards",
+  "clientName": "Dynamic Minds",
+  "productDescription": "Dynamic Minds Agentic ALM Demo",
+  "githubOrg": "mikefactorial",
+  "repoName": "DM-Agentic-ALM-Demo",
+  "publisher": "DynamicMinds",
+  "packageTag": "AgenticALMSample",
+  "trackingSystem": "github",
   "packageProjectPath": "deployments/package/Deployer/PlatformPackage.csproj",
   "solutionAreas": [
     {
-      "name": "{{SOLUTION_NAME}}",
-      "prefix": "{{SOLUTION_PREFIX}}",
-      "role": "{{SOLUTION_ROLE}}",
-      "mainSolution": "{{SOLUTION_PREFIX}}_{{SOLUTION_NAME}}",
-      "cdsproj": "src/solutions/{{SOLUTION_PREFIX}}_{{SOLUTION_NAME}}/{{SOLUTION_PREFIX}}_{{SOLUTION_NAME}}.cdsproj",
-      "pluginsPath": "src/plugins/{{SOLUTION_PREFIX}}_{{SOLUTION_NAME}}",
-      "pluginsSln": "src/plugins/{{SOLUTION_PREFIX}}_{{SOLUTION_NAME}}/{{PUBLISHER}}.{{SOLUTION_NAME}}.Plugins.sln",
+      "name": "AgenticALMSample",
+      "prefix": "dmi",
+      "role": "Dynamic Minds Agentic ALM Demo",
+      "mainSolution": "dmi_AgenticALMSample",
+      "cdsproj": "src/solutions/dmi_AgenticALMSample/dmi_AgenticALMSample.cdsproj",
+      "pluginsPath": "src/plugins/dmi_AgenticALMSample",
+      "pluginsSln": "src/plugins/dmi_AgenticALMSample/DynamicMinds.AgenticALMSample.Plugins.sln",
       "corePluginRef": null,
       "controlPreBuildPaths": [],
-      "devEnv": "{{ENV_PREFIX}}-dev",
-      "integrationEnv": "{{ENV_PREFIX}}-integration"
+      "devEnv": "dmi-dev",
+      "integrationEnv": "dmi-dev"
     }
   ],
   "innerLoopEnvironments": [
-    { "slug": "{{ENV_PREFIX}}-dev",         "url": "{{DEV_ENV_URL}}" },
-    { "slug": "{{ENV_PREFIX}}-integration", "url": "{{INTEGRATION_ENV_URL}}" }
+    { "slug": "dmi-dev", "url": "https://mikefactorialsandbox.crm.dynamics.com/" }
   ],
   "environments": [
-    { "slug": "{{ENV_PREFIX}}-dev-test", "url": "{{DEV_TEST_ENV_URL}}" },
-    { "slug": "{{ENV_PREFIX}}-test",     "url": "{{TEST_ENV_URL}}" },
-    { "slug": "{{ENV_PREFIX}}-prod",     "url": "{{PROD_ENV_URL}}" }
+    { "slug": "dmi-test", "url": "https://mikefactorialdemo.crm.dynamics.com/" },
+    { "slug": "dmi-prod", "url": "https://mikefactorialdemo.crm.dynamics.com/" }
   ],
   "packageGroups": [
     {
-      "name": "{{SOLUTION_NAME}}",
-      "solutions": ["{{SOLUTION_PREFIX}}_{{SOLUTION_NAME}}"],
-      "dataSolution": "{{SOLUTION_PREFIX}}_{{SOLUTION_NAME}}",
-      "environments": ["{{ENV_PREFIX}}-dev-test", "{{ENV_PREFIX}}-test", "{{ENV_PREFIX}}-prod"]
+      "name": "AgenticALMSample",
+      "solutions": ["dmi_AgenticALMSample"],
+      "dataSolution": "dmi_AgenticALMSample",
+      "environments": ["dmi-test", "dmi-prod"]
     }
   ]
 }

@@ -21,6 +21,11 @@
     <Reference Include="System.IO.Compression" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="../../../src/solutions/dmi_AgenticALMSample/dmi_AgenticALMSample.cdsproj"
+                      ReferenceOutputAssembly="false" ImportOrder="1" ImportMode="async" />
+  </ItemGroup>
+
   <!--
     SETUP: Add one ProjectReference per solution in this package.
     Each entry must point to the solution's .cdsproj file.

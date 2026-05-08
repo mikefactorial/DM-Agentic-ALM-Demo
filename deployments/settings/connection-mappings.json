@@ -4,5 +4,9 @@
     "connectorType": {
       "env-slug": "connection-id"
     }
+  },
+  "environments": {
+    "dmi-test": {},
+    "dmi-prod": {}
   }
 }

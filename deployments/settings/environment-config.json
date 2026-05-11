@@ -18,7 +18,9 @@
       "pluginsPath": "src/plugins/dmi_AgenticALMSample",
       "pluginsSln": "src/plugins/dmi_AgenticALMSample/DynamicMinds.AgenticALMSample.Plugins.sln",
       "corePluginRef": null,
-      "controlPreBuildPaths": [],
+      "controlPreBuildPaths": [
+        "src/controls/dmi_AgenticALMSample/PCF-MissionInferenceCard/package.json"
+      ],
       "devEnv": "dmi-dev",
       "integrationEnv": "dmi-dev"
     }

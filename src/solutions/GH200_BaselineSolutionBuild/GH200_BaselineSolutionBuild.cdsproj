@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="AlbanianXrm.CDSProj.Sdk/1.0.9">
+  <PropertyGroup>
+    <ProjectGuid>460c3b5d-76e6-4d18-abbb-da0ec5e2dc8c</ProjectGuid>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <!--Remove TargetFramework when this is available in 16.1-->
+    <TargetFramework>net462</TargetFramework>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+    <SolutionRootPath>src</SolutionRootPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SolutionPackageType>Both</SolutionPackageType>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\..\controls\dmi_AgenticALMSample\PCF-MissionInferenceCard\PCF-MissionInferenceCard.pcfproj" />
+  </ItemGroup>
+
+</Project>

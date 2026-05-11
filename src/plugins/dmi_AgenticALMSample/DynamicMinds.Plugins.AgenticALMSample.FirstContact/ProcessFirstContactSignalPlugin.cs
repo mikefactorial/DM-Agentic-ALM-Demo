@@ -7,6 +7,10 @@ namespace DynamicMinds.Plugins.AgenticALMSample.FirstContact;
 
 public sealed class ProcessFirstContactSignalPlugin : PluginBase
 {
+    public const int PriorityHigh = 100000000;
+    public const int PriorityMedium = 100000001;
+    public const int PriorityLow = 100000002;
+
     protected override void ExecutePlugin(ILocalPluginExecutionContext localContext)
     {
         var context = localContext.PluginExecutionContext;
@@ -20,24 +24,51 @@ public sealed class ProcessFirstContactSignalPlugin : PluginBase
         var result = InferPriorityAndIntent(promptTemplate, transcript);
 
         context.OutputParameters["dmi_intent"] = result.Intent;
-        context.OutputParameters["dmi_priority"] = result.Priority;
+        context.OutputParameters["dmi_priority"] = result.PriorityOptionValue;
         context.OutputParameters["dmi_actions"] = result.RecommendedActions;
 
-        localContext.TracingService.Trace("ProcessFirstContactSignalPlugin completed. Priority={0}, Intent={1}", result.Priority, result.Intent);
+        localContext.TracingService.Trace("ProcessFirstContactSignalPlugin completed. Priority={0}, Intent={1}", result.PriorityLabel, result.Intent);
     }
 
-    private static SignalInferenceResult InferPriorityAndIntent(string promptTemplate, string transcript)
+    public static SignalInferenceResult InferPriorityAndIntent(string promptTemplate, string transcript)
     {
         // Placeholder rule-based logic for Sprint 1. This is replaced with Azure OpenAI managed identity callout in Sprint 2.
         var lowered = transcript.ToLowerInvariant();
-        var priority = lowered.Contains("distress") || lowered.Contains("hostile") ? "Critical" : "Normal";
-        var intent = lowered.Contains("diplomatic") ? "Diplomatic contact" : "Unknown intent";
+
+        int priorityOptionValue;
+        string priorityLabel;
+        string intent;
+
+        if (lowered.Contains("hostile") || lowered.Contains("attack"))
+        {
+            priorityOptionValue = PriorityHigh;
+            priorityLabel = "High";
+            intent = "Potentially hostile";
+        }
+        else if (lowered.Contains("distress") || lowered.Contains("emergency"))
+        {
+            priorityOptionValue = PriorityHigh;
+            priorityLabel = "High";
+            intent = "Distress signal";
+        }
+        else if (lowered.Contains("diplomatic") || lowered.Contains("alliance") || lowered.Contains("envoy"))
+        {
+            priorityOptionValue = PriorityMedium;
+            priorityLabel = "Medium";
+            intent = "Diplomatic contact";
+        }
+        else
+        {
+            priorityOptionValue = PriorityLow;
+            priorityLabel = "Low";
+            intent = "Unknown intent";
+        }
 
         var actions = new List<string>
         {
+            "Notify command immediately",
             "Open mission review board",
-            "Attach transcript for analyst verification",
-            "Escalate to command tier based on computed priority"
+            "Attach transcript for analyst verification"
         };
 
         if (!string.IsNullOrWhiteSpace(promptTemplate))
@@ -45,21 +76,24 @@ public sealed class ProcessFirstContactSignalPlugin : PluginBase
             actions.Add("Prompt profile applied: " + promptTemplate.Substring(0, Math.Min(promptTemplate.Length, 30)) + "...");
         }
 
-        return new SignalInferenceResult(intent, priority, string.Join("; ", actions));
+        return new SignalInferenceResult(intent, priorityLabel, priorityOptionValue, string.Join("; ", actions));
     }
 
-    private sealed class SignalInferenceResult
+    public sealed class SignalInferenceResult
     {
-        public SignalInferenceResult(string intent, string priority, string recommendedActions)
+        public SignalInferenceResult(string intent, string priorityLabel, int priorityOptionValue, string recommendedActions)
         {
             Intent = intent;
-            Priority = priority;
+            PriorityLabel = priorityLabel;
+            PriorityOptionValue = priorityOptionValue;
             RecommendedActions = recommendedActions;
         }
 
         public string Intent { get; }
 
-        public string Priority { get; }
+        public string PriorityLabel { get; }
+
+        public int PriorityOptionValue { get; }
 
         public string RecommendedActions { get; }
     }

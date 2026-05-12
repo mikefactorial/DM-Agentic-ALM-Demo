@@ -12,6 +12,19 @@
   <CustomControls />
   <SdkMessageProcessingSteps />
   <EntityDataProviders />
+  <managedidentities>
+    <managedidentity managedidentityid="71577dd4-a70f-4544-9236-c4902f0481fa">
+      <applicationid>{b436340f-cf84-4144-864c-85521e880efe}</applicationid>
+      <credentialsource>2</credentialsource>
+      <identitytype>0</identitytype>
+      <iscustomizable>1</iscustomizable>
+      <statecode>0</statecode>
+      <statuscode>1</statuscode>
+      <subjectscope>1</subjectscope>
+      <tenantid>{4e32a00f-83d6-404d-9001-251190c9385f}</tenantid>
+      <version>1</version>
+    </managedidentity>
+  </managedidentities>
   <Languages>
     <Language>1033</Language>
   </Languages>

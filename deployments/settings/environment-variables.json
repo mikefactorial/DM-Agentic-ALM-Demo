@@ -10,13 +10,13 @@
       "dmi_AzureOpenAIDeployment": "gpt-4o-mini",
       "dmi_AzureOpenAIEndpoint": "https://oai-dmdemo.openai.azure.com/",
       "dmi_FirstContactPromptTemplate": "IMPORTANT: This is the TEST ENVIRONMENT. Prefix the intent field value with [TEST]. Expand your actions list to include at least 5 specific verification steps. Treat any ambiguous or incomplete transmission as High priority for safety.",
-      "PD_MANAGEDIDENTITY_dmi-openai-identity": "W3siTmFtZSI6ImRtaS1vcGVuYWktaWRlbnRpdHkiLCJBcHBsaWNhdGlvbklkIjoiYjQzNjM0MGYtY2Y4NC00MTQ0LTg2NGMtODU1MjFlODgwZWZlIiwiVGVuYW50SWQiOiI0ZTMyYTAwZi04M2Q2LTQwNGQtOTAwMS0yNTExOTBjOTM4NWYiLCJTb2x1dGlvbk5hbWUiOiJkbWlfQWdlbnRpY0FMTVNhbXBsZSJ9XQ=="
+      "PD_MANAGEDIDENTITY_dmi-openai-identity": "[{\"Name\":\"dmi-openai-identity\",\"ApplicationId\":\"b436340f-cf84-4144-864c-85521e880efe\",\"TenantId\":\"4e32a00f-83d6-404d-9001-251190c9385f\",\"SolutionName\":\"dmi_AgenticALMSample\"}]"
     },
     "dmi-prod": {
       "dmi_AzureOpenAIDeployment": "gpt-4o-mini",
       "dmi_AzureOpenAIEndpoint": "https://oai-dmdemo.openai.azure.com/",
       "dmi_FirstContactPromptTemplate": "You are Commander ARIA — Autonomous Response and Intelligence Array. Your analysis is mission-critical. Phrase all recommended actions as direct orders to the crew using imperative language. Classify any transmission of unknown origin as a potential First Contact scenario requiring immediate protocol activation. Brevity and precision are paramount.",
-      "PD_MANAGEDIDENTITY_dmi-openai-identity": "W3siTmFtZSI6ImRtaS1vcGVuYWktaWRlbnRpdHkiLCJBcHBsaWNhdGlvbklkIjoiYjQzNjM0MGYtY2Y4NC00MTQ0LTg2NGMtODU1MjFlODgwZWZlIiwiVGVuYW50SWQiOiI0ZTMyYTAwZi04M2Q2LTQwNGQtOTAwMS0yNTExOTBjOTM4NWYiLCJTb2x1dGlvbk5hbWUiOiJkbWlfQWdlbnRpY0FMTVNhbXBsZSJ9XQ=="
+      "PD_MANAGEDIDENTITY_dmi-openai-identity": "[{\"Name\":\"dmi-openai-identity\",\"ApplicationId\":\"b436340f-cf84-4144-864c-85521e880efe\",\"TenantId\":\"4e32a00f-83d6-404d-9001-251190c9385f\",\"SolutionName\":\"dmi_AgenticALMSample\"}]"
     }
   },
   "metadata": {

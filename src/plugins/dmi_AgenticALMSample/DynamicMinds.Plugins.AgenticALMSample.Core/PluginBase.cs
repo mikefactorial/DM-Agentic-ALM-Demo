@@ -22,7 +22,8 @@ public abstract class PluginBase : IPlugin
         }
 
         var organizationService = serviceFactory.CreateOrganizationService(executionContext.UserId);
-        var localContext = new LocalPluginExecutionContext(executionContext, organizationService, tracingService);
+        var managedIdentityService = serviceProvider.GetService(typeof(IManagedIdentityService)) as IManagedIdentityService;
+        var localContext = new LocalPluginExecutionContext(executionContext, organizationService, tracingService, managedIdentityService);
 
         ExecutePlugin(localContext);
     }

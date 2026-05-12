@@ -1,0 +1,24 @@
+<Project>
+  <!--
+    Auto-sign the nupkg after build so Dataverse accepts it for Managed Identity.
+    Requires: certs/DynamicMinds.AgenticALMSample.pfx (self-signed, password in NUPKG_SIGN_PASSWORD env var or defaults below)
+    For CI/CD: set the NUPKG_SIGN_PASSWORD secret in your GitHub Actions environment.
+  -->
+  <PropertyGroup>
+    <NupkgSignCertPath>$(MSBuildThisFileDirectory)certs\DynamicMinds.AgenticALMSample.pfx</NupkgSignCertPath>
+    <NupkgSignPassword Condition="'$(NUPKG_SIGN_PASSWORD)' != ''">$(NUPKG_SIGN_PASSWORD)</NupkgSignPassword>
+    <NupkgSignPassword Condition="'$(NupkgSignPassword)' == ''">DataversePlugin!</NupkgSignPassword>
+  </PropertyGroup>
+
+  <Target Name="SignNupkg" AfterTargets="Pack" Condition="Exists('$(NupkgSignCertPath)') AND '$(PackageId)' != ''">
+    <ItemGroup>
+      <_NupkgToSign Include="$(PackageOutputPath)$(PackageId).$(Version).nupkg" />
+      <_NupkgToSign Include="$(OutputPath)$(PackageId).$(Version).nupkg" />
+    </ItemGroup>
+    <Message Text="Signing nupkg: %(_NupkgToSign.Identity)" Importance="high" />
+    <Exec
+      Command="dotnet nuget sign &quot;%(_NupkgToSign.Identity)&quot; --certificate-path &quot;$(NupkgSignCertPath)&quot; --certificate-password &quot;$(NupkgSignPassword)&quot; --timestamper http://timestamp.digicert.com --overwrite"
+      Condition="Exists('%(_NupkgToSign.Identity)')"
+      ContinueOnError="false" />
+  </Target>
+</Project>

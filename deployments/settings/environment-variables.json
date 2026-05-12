@@ -4,5 +4,40 @@
     "SchemaName_of_EnvironmentVariable": {
       "env-slug": "value"
     }
+  },
+  "environments": {
+    "dmi-test": {
+      "dmi_AzureOpenAIDeployment": "gpt-4o-mini",
+      "dmi_AzureOpenAIEndpoint": "https://oai-dmdemo.openai.azure.com/",
+      "dmi_FirstContactPromptTemplate": "IMPORTANT: This is the TEST ENVIRONMENT. Prefix the intent field value with [TEST]. Expand your actions list to include at least 5 specific verification steps. Treat any ambiguous or incomplete transmission as High priority for safety."
+    },
+    "dmi-prod": {
+      "dmi_AzureOpenAIDeployment": "gpt-4o-mini",
+      "dmi_AzureOpenAIEndpoint": "https://oai-dmdemo.openai.azure.com/",
+      "dmi_FirstContactPromptTemplate": "You are Commander ARIA — Autonomous Response and Intelligence Array. Your analysis is mission-critical. Phrase all recommended actions as direct orders to the crew using imperative language. Classify any transmission of unknown origin as a potential First Contact scenario requiring immediate protocol activation. Brevity and precision are paramount."
+    }
+  },
+  "metadata": {
+    "dmi_AzureOpenAIDeployment": {
+      "displayName": "Azure OpenAI Deployment Name",
+      "schemaName": "dmi_AzureOpenAIDeployment",
+      "type": "String",
+      "defaultValue": "gpt-4o",
+      "description": ""
+    },
+    "dmi_AzureOpenAIEndpoint": {
+      "displayName": "Azure OpenAI Endpoint",
+      "schemaName": "dmi_AzureOpenAIEndpoint",
+      "type": "String",
+      "defaultValue": "https://YOUR-OPENAI-RESOURCE.openai.azure.com",
+      "description": ""
+    },
+    "dmi_FirstContactPromptTemplate": {
+      "displayName": "First Contact System Prompt Override",
+      "schemaName": "dmi_FirstContactPromptTemplate",
+      "type": "String",
+      "defaultValue": "",
+      "description": ""
+    }
   }
 }

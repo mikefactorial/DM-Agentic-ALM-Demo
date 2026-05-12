@@ -1,0 +1,12 @@
+<pluginpackage uniquename="dmi_dmi_DynamicMinds.Plugins.AgenticALMSample.FirstContact">
+  <exportkeyversion>1</exportkeyversion>
+  <iscustomizable>1</iscustomizable>
+  <managedidentityid>
+    <managedidentityid>71577dd4-a70f-4544-9236-c4902f0481fa</managedidentityid>
+  </managedidentityid>
+  <name>dmi_dmi_DynamicMinds.Plugins.AgenticALMSample.FirstContact</name>
+  <package mimetype="application/octet-stream">dmi_dmi_DynamicMinds.Plugins.AgenticALMSample.FirstContact.nupkg</package>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+  <version>1.0.0</version>
+</pluginpackage>

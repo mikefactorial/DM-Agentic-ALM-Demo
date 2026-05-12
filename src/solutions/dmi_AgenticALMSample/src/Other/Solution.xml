@@ -81,10 +81,16 @@
     </Publisher>
     <RootComponents>
       <RootComponent type="1" schemaName="dmi_firstcontact" behavior="0" />
+      <RootComponent type="1" schemaName="dmi_signalscenario" behavior="1" />
       <RootComponent type="66" schemaName="dmi_dmi.MissionInferenceCard" behavior="0" />
       <RootComponent type="91" id="{7bcfb707-bb4d-f111-bec6-000d3a36fbfe}" schemaName="DynamicMinds.Plugins.AgenticALMSample.FirstContact, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" behavior="0" />
       <RootComponent type="92" id="{7d7e6e20-bb4d-f111-bec5-0022480be5cc}" behavior="0" />
     </RootComponents>
-    <MissingDependencies />
+    <MissingDependencies>
+      <MissingDependency>
+        <Required type="1" schemaName="dmi_signalscenario" displayName="Signal Scenario" solution="Active" />
+        <Dependent type="1" schemaName="dmi_signalscenario" displayName="Signal Scenario" />
+      </MissingDependency>
+    </MissingDependencies>
   </SolutionManifest>
 </ImportExportXml>

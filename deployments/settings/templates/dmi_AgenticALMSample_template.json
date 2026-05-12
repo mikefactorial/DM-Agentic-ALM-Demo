@@ -1,4 +1,5 @@
 {
+  "ConnectionReferences": [],
   "Metadata": {
     "dmi_AzureOpenAIDeployment": {
       "displayName": "Azure OpenAI Deployment Name",
@@ -35,6 +36,5 @@
       "SchemaName": "dmi_FirstContactPromptTemplate",
       "Value": ""
     }
-  ],
-  "ConnectionReferences": []
+  ]
 }

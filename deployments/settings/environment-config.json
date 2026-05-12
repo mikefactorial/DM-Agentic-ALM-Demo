@@ -42,11 +42,11 @@
           "solutionName": "dmi_AgenticALMSample",
           "perEnvironment": {
             "dmi-test": {
-              "applicationId": "b436340f-cf84-4144-864c-85521e880efe",
+              "applicationId": "756aac52-b051-4a6b-ab88-be75acc59959",
               "tenantId": "4e32a00f-83d6-404d-9001-251190c9385f"
             },
             "dmi-prod": {
-              "applicationId": "b436340f-cf84-4144-864c-85521e880efe",
+              "applicationId": "756aac52-b051-4a6b-ab88-be75acc59959",
               "tenantId": "4e32a00f-83d6-404d-9001-251190c9385f"
             }
           }

@@ -31,13 +31,18 @@ public sealed class ProcessFirstContactSignalPlugin : PluginBase
         localContext.TracingService.Trace("Reading environment variables for Azure OpenAI.");
         var endpoint = EnvironmentVariableService.GetRequiredValue(localContext.OrganizationService, "dmi_AzureOpenAIEndpoint");
         var deployment = EnvironmentVariableService.GetRequiredValue(localContext.OrganizationService, "dmi_AzureOpenAIDeployment");
-        var tenantId = EnvironmentVariableService.GetRequiredValue(localContext.OrganizationService, "dmi_OpenAITenantId");
-        var clientId = EnvironmentVariableService.GetRequiredValue(localContext.OrganizationService, "dmi_OpenAIClientId");
-        var clientSecret = EnvironmentVariableService.GetRequiredValue(localContext.OrganizationService, "dmi_OpenAIClientSecret");
         var promptTemplate = EnvironmentVariableService.GetValue(localContext.OrganizationService, "dmi_FirstContactPromptTemplate") ?? string.Empty;
 
+        if (localContext.ManagedIdentityService == null)
+        {
+            throw new InvalidPluginExecutionException("IManagedIdentityService is not available. Ensure a managed identity is configured for this plugin package in the Dataverse environment.");
+        }
+
+        localContext.TracingService.Trace("Acquiring token via managed identity for resource '{0}'.", AzureOpenAIService.CognitiveServicesResource);
+        var bearerToken = localContext.ManagedIdentityService.AcquireToken(new[] { AzureOpenAIService.CognitiveServicesResource });
+
         localContext.TracingService.Trace("Calling Azure OpenAI deployment '{0}' at '{1}'.", deployment, endpoint);
-        var openAI = new AzureOpenAIService(endpoint, deployment, tenantId, clientId, clientSecret);
+        var openAI = new AzureOpenAIService(endpoint, deployment, bearerToken);
         var result = openAI.AnalyseTranscript(promptTemplate, transcript);
 
         localContext.TracingService.Trace("Analysis complete. Intent={0}, Priority={1}.", result.Intent, result.PriorityLabel);

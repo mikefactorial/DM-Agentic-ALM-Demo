@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Specialized;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -9,26 +8,25 @@ using Newtonsoft.Json.Linq;
 namespace DynamicMinds.Plugins.AgenticALMSample.FirstContact;
 
 /// <summary>
-/// Calls Azure OpenAI Chat Completions API using a managed identity client credentials token.
+/// Calls Azure OpenAI Chat Completions API using a bearer token acquired externally
+/// (e.g. via Dataverse IManagedIdentityService — no client secret required).
 /// </summary>
 public sealed class AzureOpenAIService
 {
     private readonly string _endpoint;
     private readonly string _deploymentName;
-    private readonly string _tenantId;
-    private readonly string _clientId;
-    private readonly string _clientSecret;
+    private readonly string _bearerToken;
 
-    private const string AzureCognitiveServicesScope = "https://cognitiveservices.azure.com/.default";
     private const string ApiVersion = "2024-02-01";
 
-    public AzureOpenAIService(string endpoint, string deploymentName, string tenantId, string clientId, string clientSecret)
+    /// <summary>The Azure Cognitive Services resource scope used when acquiring a token.</summary>
+    public const string CognitiveServicesResource = "https://cognitiveservices.azure.com";
+
+    public AzureOpenAIService(string endpoint, string deploymentName, string bearerToken)
     {
         _endpoint = endpoint?.TrimEnd('/') ?? throw new ArgumentNullException(nameof(endpoint));
         _deploymentName = deploymentName ?? throw new ArgumentNullException(nameof(deploymentName));
-        _tenantId = tenantId ?? throw new ArgumentNullException(nameof(tenantId));
-        _clientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
-        _clientSecret = clientSecret ?? throw new ArgumentNullException(nameof(clientSecret));
+        _bearerToken = bearerToken ?? throw new ArgumentNullException(nameof(bearerToken));
     }
 
     /// <summary>
@@ -36,38 +34,11 @@ public sealed class AzureOpenAIService
     /// </summary>
     public ProcessFirstContactSignalPlugin.SignalInferenceResult AnalyseTranscript(string systemPrompt, string transcript)
     {
-        var bearerToken = AcquireToken();
-        var response = CallChatCompletions(bearerToken, systemPrompt, transcript);
+        var response = CallChatCompletions(systemPrompt, transcript);
         return ParseResponse(response);
     }
 
-    private string AcquireToken()
-    {
-        var tokenUrl = $"https://login.microsoftonline.com/{_tenantId}/oauth2/v2.0/token";
-
-        using var client = new WebClient();
-        var parameters = new NameValueCollection
-        {
-            ["grant_type"] = "client_credentials",
-            ["client_id"] = _clientId,
-            ["client_secret"] = _clientSecret,
-            ["scope"] = AzureCognitiveServicesScope
-        };
-
-        byte[] responseBytes = client.UploadValues(tokenUrl, "POST", parameters);
-        var json = Encoding.UTF8.GetString(responseBytes);
-        var obj = JObject.Parse(json);
-
-        var token = obj["access_token"]?.ToString();
-        if (string.IsNullOrWhiteSpace(token))
-        {
-            throw new InvalidOperationException($"Failed to acquire Azure AD token. Response: {json}");
-        }
-
-        return token;
-    }
-
-    private string CallChatCompletions(string bearerToken, string systemPrompt, string transcript)
+    private string CallChatCompletions(string systemPrompt, string transcript)
     {
         var url = $"{_endpoint}/openai/deployments/{_deploymentName}/chat/completions?api-version={ApiVersion}";
 
@@ -90,7 +61,7 @@ public sealed class AzureOpenAIService
         request.Method = "POST";
         request.ContentType = "application/json";
         request.ContentLength = requestBytes.Length;
-        request.Headers.Add("Authorization", $"Bearer {bearerToken}");
+        request.Headers.Add("Authorization", $"Bearer {_bearerToken}");
 
         using (var stream = request.GetRequestStream())
         {

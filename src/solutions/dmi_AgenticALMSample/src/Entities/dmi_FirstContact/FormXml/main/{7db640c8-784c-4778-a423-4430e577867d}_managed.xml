@@ -22,7 +22,7 @@
                     <row>
                       <cell id="{07070230-79ac-4a3f-be28-e9025939e3e2}">
                         <labels>
-                          <label description="Name" languagecode="1033" />
+                          <label description="" languagecode="1033" />
                         </labels>
                         <control id="dmi_name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="dmi_name" />
                       </cell>
@@ -30,7 +30,7 @@
                     <row>
                       <cell id="{12d5f3c0-8d33-4a6e-a6c9-0c313eb23ac5}" locklevel="0" colspan="1" rowspan="1">
                         <labels>
-                          <label description="Signal Transcript" languagecode="1033" />
+                          <label description="" languagecode="1033" />
                         </labels>
                         <control id="dmi_signaltranscript" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="dmi_signaltranscript" disabled="false" />
                       </cell>
@@ -38,7 +38,7 @@
                     <row>
                       <cell id="{157b292b-fee4-4ef7-a222-98651d98b85a}">
                         <labels>
-                          <label description="Owner" languagecode="1033" />
+                          <label description="" languagecode="1033" />
                         </labels>
                         <control id="ownerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="ownerid" />
                       </cell>
@@ -54,7 +54,7 @@
                     <row>
                       <cell locklevel="0" id="{2f873bd9-2ea1-4716-a952-9b63c3dc3b3a}" colspan="1" rowspan="1">
                         <labels>
-                          <label description="Inferred Intent" languagecode="1033" />
+                          <label description="" languagecode="1033" />
                         </labels>
                         <control id="dmi_intent" classid="{F9A8A302-114E-466A-B582-6771B2AE0D92}" datafieldname="dmi_intent" uniqueid="{aaeefdfa-772f-458f-9ea6-a4999952cd27}" />
                       </cell>

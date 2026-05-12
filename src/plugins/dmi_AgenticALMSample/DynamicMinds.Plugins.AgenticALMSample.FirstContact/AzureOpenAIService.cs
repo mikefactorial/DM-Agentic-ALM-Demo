@@ -3,7 +3,6 @@ using System.IO;
 using System.Net;
 using System.Text;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace DynamicMinds.Plugins.AgenticALMSample.FirstContact;
 
@@ -90,36 +89,6 @@ public sealed class AzureOpenAIService
             : basePrompt + "\n\nAdditional instructions: " + customPrompt;
     }
 
-    private ProcessFirstContactSignalPlugin.SignalInferenceResult ParseResponse(string completionsJson)
-    {
-        var root = JObject.Parse(completionsJson);
-        var content = root["choices"]?[0]?["message"]?["content"]?.ToString()
-            ?? throw new InvalidOperationException("Azure OpenAI response did not contain expected content.");
-
-        JObject parsed;
-        try
-        {
-            parsed = JObject.Parse(content);
-        }
-        catch (JsonException ex)
-        {
-            throw new InvalidOperationException($"Azure OpenAI returned non-JSON content: {content}", ex);
-        }
-
-        var intent = parsed["intent"]?.ToString() ?? "Unknown intent";
-        var priorityStr = parsed["priority"]?.ToString() ?? "Low";
-        var actionsArray = parsed["actions"] as JArray;
-        var actions = actionsArray != null
-            ? string.Join("; ", actionsArray.Values<string>())
-            : "No actions specified";
-
-        var (priorityOptionValue, priorityLabel) = priorityStr.ToUpperInvariant() switch
-        {
-            "HIGH" => (ProcessFirstContactSignalPlugin.PriorityHigh, "High"),
-            "MEDIUM" => (ProcessFirstContactSignalPlugin.PriorityMedium, "Medium"),
-            _ => (ProcessFirstContactSignalPlugin.PriorityLow, "Low")
-        };
-
-        return new ProcessFirstContactSignalPlugin.SignalInferenceResult(intent, priorityLabel, priorityOptionValue, actions);
-    }
+    private static ProcessFirstContactSignalPlugin.SignalInferenceResult ParseResponse(string completionsJson)
+        => AzureOpenAIResponseParser.Parse(completionsJson);
 }

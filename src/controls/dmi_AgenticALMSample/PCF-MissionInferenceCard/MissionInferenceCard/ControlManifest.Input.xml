@@ -6,9 +6,9 @@
     <!-- dmi_intent: the AI-inferred intent of the signal -->
     <property name="intent" display-name-key="Intent_DisplayKey" description-key="Intent_Desc" of-type="SingleLine.Text" usage="bound" required="false" />
     <!-- dmi_priority: option set value rendered as a colour-coded badge -->
-    <property name="priority" display-name-key="Priority_DisplayKey" description-key="Priority_Desc" of-type="Whole.None" usage="bound" required="false" />
+    <property name="priority" display-name-key="Priority_DisplayKey" description-key="Priority_Desc" of-type="OptionSet" usage="bound" required="false" />
     <!-- dmi_actions: semicolon-separated recommended actions -->
-    <property name="actions" display-name-key="Actions_DisplayKey" description-key="Actions_Desc" of-type="Multiple" usage="bound" required="false" />
+    <property name="actions" display-name-key="Actions_DisplayKey" description-key="Actions_Desc" of-type="SingleLine.Text" usage="bound" required="false" />
     <resources>
       <code path="index.ts" order="1"/>
       <css path="css/MissionInferenceCard.css" order="1" />

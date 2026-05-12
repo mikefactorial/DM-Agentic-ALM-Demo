@@ -1,12 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<SdkMessageProcessingStep Name="DynamicMinds.Plugins.AgenticALMSample.FirstContact.ProcessFirstContactSignalPlugin: Create of dmi_firstcontact" SdkMessageProcessingStepId="{ad55a662-444d-f111-bec5-0022480be275}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<SdkMessageProcessingStep Name="DynamicMinds.Plugins.AgenticALMSample.FirstContact.ProcessFirstContactSignalPlugin: Create of dmi_firstcontact" SdkMessageProcessingStepId="{7d7e6e20-bb4d-f111-bec5-0022480be5cc}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SdkMessageId>9ebdbb1b-ea3e-db11-86a7-000a3a5473e8</SdkMessageId>
-  <PluginTypeExportKey>8428F29D6925310607462987A3A4CA0CB3F584FCC36228303FBE8EAFB18B547C</PluginTypeExportKey>
+  <PluginTypeExportKey>8791E7189F8D674CEF145A9040BFCFA7D783309889483BCACF656DD99292F14E</PluginTypeExportKey>
   <PrimaryEntity>dmi_firstcontact</PrimaryEntity>
   <AsyncAutoDelete>0</AsyncAutoDelete>
+  <Description>DynamicMinds.Plugins.AgenticALMSample.FirstContact.ProcessFirstContactSignalPlugin: Create of dmi_firstcontact</Description>
   <FilteringAttributes>dmi_signaltranscript</FilteringAttributes>
   <InvocationSource>1</InvocationSource>
-  <Mode>1</Mode>
+  <Mode>0</Mode>
   <Rank>1</Rank>
   <EventHandlerTypeCode>4602</EventHandlerTypeCode>
   <Stage>40</Stage>

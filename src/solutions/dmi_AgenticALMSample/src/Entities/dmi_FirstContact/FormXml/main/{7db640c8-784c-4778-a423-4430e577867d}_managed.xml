@@ -1,0 +1,196 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <systemform>
+    <formid>{7db640c8-784c-4778-a423-4430e577867d}</formid>
+    <IntroducedVersion>1.0</IntroducedVersion>
+    <FormPresentation>1</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form headerdensity="HighWithControls">
+      <tabs>
+        <tab verticallayout="true" id="{fb82aa60-a7c7-4afb-8254-7e0bdf00e302}" IsUserDefined="1">
+          <labels>
+            <label description="General" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="33%">
+              <sections>
+                <section showlabel="false" showbar="false" IsUserDefined="0" id="{8d7686d1-25eb-47bd-b19a-82841e6bccc5}">
+                  <labels>
+                    <label description="General" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{07070230-79ac-4a3f-be28-e9025939e3e2}">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="dmi_name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="dmi_name" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{12d5f3c0-8d33-4a6e-a6c9-0c313eb23ac5}" locklevel="0" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="dmi_signaltranscript" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="dmi_signaltranscript" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{157b292b-fee4-4ef7-a222-98651d98b85a}">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="ownerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="ownerid" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+                <section name="null_section_4" id="90770704-a9e6-4e22-8b92-8e9816809986" IsUserDefined="0" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="1" labelwidth="115">
+                  <labels>
+                    <label description="New Section" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row />
+                    <row>
+                      <cell locklevel="0" id="{2f873bd9-2ea1-4716-a952-9b63c3dc3b3a}" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="dmi_intent" classid="{F9A8A302-114E-466A-B582-6771B2AE0D92}" datafieldname="dmi_intent" uniqueid="{aaeefdfa-772f-458f-9ea6-a4999952cd27}" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+            <column width="66%">
+              <sections>
+                <section showlabel="false" showbar="false" id="{33317ab3-1abb-40c9-a48c-176968001221}" IsUserDefined="0" height="auto">
+                  <labels>
+                    <label description="Notes" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell showlabel="false" rowspan="15" auto="false" id="{83ec7e53-b4dd-4af7-91ff-7db1ef5fbce0}">
+                        <labels>
+                          <label description="Note Text" languagecode="1033" />
+                        </labels>
+                        <control id="notescontrol" classid="{06375649-c143-495e-a496-c962e5b4488e}">
+                          <parameters>
+                            <DefaultTabId>NotesTab</DefaultTabId>
+                          </parameters>
+                        </control>
+                      </cell>
+                    </row>
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row height="auto" />
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+      <header id="{0471675d-e103-446d-94f4-ae375462f1a1}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left">
+        <rows>
+          <row>
+            <cell id="{75504044-35ff-437a-8443-ffe2751c1a75}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{f35f9652-d8a8-4b6b-9af8-84afc4d078b1}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{399898c6-d1aa-4125-b832-cc94ee495500}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+          </row>
+        </rows>
+      </header>
+      <footer id="{b39fa222-6cb3-4e96-ad6b-3263ad3778c1}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left">
+        <rows>
+          <row>
+            <cell id="{fe72cf04-99a9-40b4-aae3-e187c2ce8e86}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{678a088b-6930-4c9f-a886-43d6b59d1fe8}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{29d0eb81-684b-47fe-bb53-61dd1c9e39d8}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+          </row>
+        </rows>
+      </footer>
+      <DisplayConditions Order="0" FallbackForm="true">
+        <Everyone />
+      </DisplayConditions>
+      <controlDescriptions>
+        <controlDescription forControl="{aaeefdfa-772f-458f-9ea6-a4999952cd27}">
+          <customControl id="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}">
+            <parameters>
+              <datafieldname>dmi_intent</datafieldname>
+            </parameters>
+          </customControl>
+          <customControl id="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}">
+            <parameters>
+              <datafieldname>dmi_intent</datafieldname>
+            </parameters>
+          </customControl>
+          <customControl formFactor="0" name="dmi_dmi.MissionInferenceCard">
+            <parameters>
+              <intent type="SingleLine.Text">dmi_intent</intent>
+              <priority type="OptionSet">dmi_priority</priority>
+              <actions type="SingleLine.Text">dmi_actions</actions>
+            </parameters>
+          </customControl>
+          <customControl formFactor="2" name="dmi_dmi.MissionInferenceCard">
+            <parameters>
+              <intent type="SingleLine.Text">dmi_intent</intent>
+              <priority type="OptionSet">dmi_priority</priority>
+              <actions type="SingleLine.Text">dmi_actions</actions>
+            </parameters>
+          </customControl>
+          <customControl formFactor="1" name="dmi_dmi.MissionInferenceCard">
+            <parameters>
+              <intent type="SingleLine.Text">dmi_intent</intent>
+              <priority type="OptionSet">dmi_priority</priority>
+              <actions type="SingleLine.Text">dmi_actions</actions>
+            </parameters>
+          </customControl>
+        </controlDescription>
+      </controlDescriptions>
+    </form>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <LocalizedNames>
+      <LocalizedName description="Information" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="A form for this entity." languagecode="1033" />
+    </Descriptions>
+  </systemform>
+</forms>

@@ -1,5 +1,4 @@
 {
-  "ConnectionReferences": [],
   "Metadata": {
     "dmi_AzureOpenAIDeployment": {
       "displayName": "Azure OpenAI Deployment Name",
@@ -23,6 +22,7 @@
       "description": ""
     }
   },
+  "ConnectionReferences": [],
   "EnvironmentVariables": [
     {
       "SchemaName": "dmi_AzureOpenAIDeployment",

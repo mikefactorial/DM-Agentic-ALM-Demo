@@ -352,6 +352,7 @@
           <IsFilterable>0</IsFilterable>
           <IsRetrievable>0</IsRetrievable>
           <IsLocalizable>0</IsLocalizable>
+          <AppDefaultValue>-1</AppDefaultValue>
           <optionset Name="new_dmi_firstcontact_dmi_priority">
             <OptionSetType>picklist</OptionSetType>
             <IntroducedVersion>1.0</IntroducedVersion>
@@ -485,6 +486,7 @@
           <IsFilterable>0</IsFilterable>
           <IsRetrievable>0</IsRetrievable>
           <IsLocalizable>0</IsLocalizable>
+          <AppDefaultValue>-1</AppDefaultValue>
           <optionset Name="new_dmi_firstcontact_dmi_status">
             <OptionSetType>picklist</OptionSetType>
             <IntroducedVersion>1.0</IntroducedVersion>

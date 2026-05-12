@@ -21,13 +21,6 @@
       "type": "String",
       "defaultValue": "",
       "description": ""
-    },
-    "PD_MANAGEDIDENTITY_dmi-openai-identity": {
-      "displayName": "Managed Identity: dmi-openai-identity",
-      "schemaName": "PD_MANAGEDIDENTITY_dmi-openai-identity",
-      "type": "String",
-      "defaultValue": "",
-      "description": ""
     }
   },
   "EnvironmentVariables": [
@@ -41,10 +34,6 @@
     },
     {
       "SchemaName": "dmi_FirstContactPromptTemplate",
-      "Value": ""
-    },
-    {
-      "SchemaName": "PD_MANAGEDIDENTITY_dmi-openai-identity",
       "Value": ""
     }
   ]

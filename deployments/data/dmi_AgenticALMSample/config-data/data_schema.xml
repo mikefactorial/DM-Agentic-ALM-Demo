@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<entities>
+
+  <!--
+    Signal Scenario Library — demo seed data for the Space Mission First Contact demo.
+    Records are imported into each environment after solution deployment.
+    Each scenario provides a ready-made signal transcript that presenters can paste into
+    a new dmi_firstcontact record to trigger the Azure OpenAI analysis pipeline.
+
+    etc = 12669 (queried from Dataverse after table creation)
+  -->
+  <entity name="dmi_signalscenario"
+          displayname="Signal Scenario"
+          etc="12669"
+          primaryidfield="dmi_signalscenarioid"
+          primarynamefield="dmi_name"
+          disableplugins="true">
+    <fields>
+      <field displayname="Signal Scenario"     name="dmi_signalscenarioid"    type="guid"   primaryKey="true" />
+      <field displayname="Name"                name="dmi_name"                type="string" customfield="true" />
+      <field displayname="Signal Transcript"   name="dmi_signaltranscript"    type="string" customfield="true" />
+      <field displayname="Status"              name="statecode"               type="state" />
+      <field displayname="Status Reason"       name="statuscode"              type="status" />
+    </fields>
+    <relationships/>
+  </entity>
+
+</entities>

@@ -27,8 +27,16 @@
     { "slug": "dmi-dev", "url": "https://mikefactorialsandbox.crm.dynamics.com/" }
   ],
   "environments": [
-    { "slug": "dmi-test", "url": "https://mikefactorialdemo.crm.dynamics.com/" },
-    { "slug": "dmi-prod", "url": "https://mikefactorialdemo.crm.dynamics.com/" }
+    { 
+      "slug": "dmi-test", 
+      "url": "https://mikefactorialdemo.crm.dynamics.com/",
+      "organizationSettings": {"isauditenabled": "true"}
+    },
+    { "slug": "dmi-prod", 
+      "url": "https://mikefactorialdemo.crm.dynamics.com/",
+      "$comment_organizationSettings": "Optional. Dataverse Organization entity logical names → values. Applied by EnvironmentSettingsService during package deploy. Examples: isauditenabled, allowuseremailchange, isenvironmentallyresponsible. Omit or leave as {} if no org-level settings are needed for this environment.",
+      "organizationSettings": {"isauditenabled": "true"}
+    }
   ],
   "packageGroups": [
     {

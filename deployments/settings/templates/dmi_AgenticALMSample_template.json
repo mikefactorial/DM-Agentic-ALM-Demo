@@ -42,10 +42,6 @@
     {
       "SchemaName": "dmi_FirstContactPromptTemplate",
       "Value": ""
-    },
-    {
-      "SchemaName": "PD_MANAGEDIDENTITY_dmi-openai-identity",
-      "Value": ""
     }
   ]
 }

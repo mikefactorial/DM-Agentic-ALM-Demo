@@ -1,0 +1,43 @@
+
+<entities xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" timestamp="2026-05-12T18:00:33.4312904Z">
+  <entity name="dmi_signalscenario" displayname="Signal Scenario">
+    <records>
+      <record id="d1000001-0000-0000-0000-000000000001">
+        <field name="dmi_signalscenarioid" value="d1000001-0000-0000-0000-000000000001" />
+        <field name="dmi_name" value="Unknown Vessel — Alpha Quadrant Approach" />
+        <field name="dmi_signaltranscript" value="INTERCEPT LOG — Stardate 2026.133 | Bearing 047-mark-12 | Signal origin: Alpha Quadrant boundary, sector 7-G. Vessel class: unrecognised. Hull configuration does not match any catalogued Federation, Klingon, Romulan, or independent trader registry. Drive signature is non-standard — possibly quantum-slipstream or exotic matter propulsion. No response to hailing frequencies 1 through 7 on all standard bands. Passive sensor sweep reveals: crew complement approx. 12-40, life signs ambiguous (non-humanoid possible), internal temperature 280K, shields status unknown. Vessel is maintaining a direct intercept course at warp 6.8. ETA to Federation space boundary: 4.2 hours. Signal fragment recovered from subspace static: &amp;#39;...we carry the weight of... [corrupted]... do not... [corrupted]... seek only passage... [corrupted]...&amp;#39;. Recommend immediate First Contact protocol activation. Crew safety assessment: UNKNOWN. This vessel has not engaged weapons but has not stood down either." />
+        <field name="statecode" value="0" />
+        <field name="statuscode" value="1" />
+      </record>
+      <record id="d1000002-0000-0000-0000-000000000002">
+        <field name="dmi_signalscenarioid" value="d1000002-0000-0000-0000-000000000002" />
+        <field name="dmi_name" value="Distress Beacon — Deep Space Relay Station 7" />
+        <field name="dmi_signaltranscript" value="EMERGENCY BROADCAST — ALL VESSELS IN RANGE | Origin: DS Relay Station 7, coordinates 23.441 / -88.12 / 0.004 (galactic plane). Priority: CRITICAL. Automated distress protocol activated at 14:32:07 UTC. Last operator transmission (recorded): &amp;#39;Station is compromised — unknown biological agent detected in life support conduits, sections 3 through 9 sealed, four crew members are down, Dr. Reyes is unresponsive — if anyone receives this we need immediate medical evacuation and a containment team. Do NOT dock without Level 4 biosuits — repeat, do NOT dock without Level 4 biosuits. The samples from the survey mission on Kepler-452b may have been — &amp;#39; [TRANSMISSION ENDS]. Station reactor is operating at 140% nominal, venting plasma from port thruster array. Navigation beacon is offline. Station is at risk of catastrophic containment failure within estimated 6-9 hours without intervention. Nearest vessel in registry: ISV Meridian, 3.1 light-hours out. Recommend immediate response with full medical and hazmat crew complement." />
+        <field name="statecode" value="0" />
+        <field name="statuscode" value="1" />
+      </record>
+      <record id="d1000003-0000-0000-0000-000000000003">
+        <field name="dmi_signalscenarioid" value="d1000003-0000-0000-0000-000000000003" />
+        <field name="dmi_name" value="Mathematical Sequence — Pulsar PSR J0437 Anomaly" />
+        <field name="dmi_signaltranscript" value="SIGNAL ANALYSIS REPORT — Radio Telescope Array Omega-9 | Source: Pulsar PSR J0437-4715 vicinity | Duration of anomaly: 14 days, 6 hours | Classification: NON-NATURAL, HIGH CONFIDENCE. A structured signal has been isolated from background pulsar radiation in the 1420 MHz hydrogen line. The signal encodes a repeating mathematical sequence: prime numbers 2, 3, 5, 7, 11, 13, 17, 19, 23... continuing to the 256th prime (1619), followed by a pause of exactly 3.14159 seconds (pi, to 5 decimal places), then the Fibonacci sequence beginning at term 1 through term 64. This pattern repeats with a drift of 2.3 ms per cycle, consistent with the Doppler shift of a source moving at 0.0043c relative to the pulsar. No known natural process produces this signature. The signal does not match any SETI Watch List archive entry. Source distance estimated at 2,000-2,400 light-years. Signal strength and structure suggest deliberate broadcast, not accidental leakage. Recommend continued monitoring and formal SETI Working Group notification." />
+        <field name="statecode" value="0" />
+        <field name="statuscode" value="1" />
+      </record>
+      <record id="d1000004-0000-0000-0000-000000000004">
+        <field name="dmi_signalscenarioid" value="d1000004-0000-0000-0000-000000000004" />
+        <field name="dmi_name" value="Gravitational Wave Burst — Sector 12 Survey" />
+        <field name="dmi_signaltranscript" value="PASSIVE SENSOR LOG — Long Range Survey Probe Ariadne-3 | Sector 12, grid reference NW-447 | Observation window: 72 hours continuous. A gravitational wave burst of unusual character was recorded at 03:14 UTC. Initial classification by onboard AI: neutron star merger (confidence 61%). Secondary analysis flagged anomalies: (a) the event horizon signature does not match any known neutron star pair in the sector catalogue, (b) the wave frequency modulation contains a 0.7% periodic deviation that is inconsistent with inspiral mechanics, (c) post-burst survey shows no gamma-ray burst or kilonova remnant in the source direction. The source region (approx. 400 light-year radius cone) contains no catalogued stellar remnants. Alternate hypotheses under consideration: (1) exotic compact object, mass ~3.2 solar masses, below current detection threshold in optical, (2) instrument artifact — probability 8% given triple redundancy, (3) unknown phenomenon. No immediate threat to navigation. Suggest adding source coordinates to next scheduled deep-field survey queue." />
+        <field name="statecode" value="0" />
+        <field name="statuscode" value="1" />
+      </record>
+      <record id="cfaf9118-2b4e-f111-bec5-0022480be5cc">
+        <field name="dmi_signalscenarioid" value="cfaf9118-2b4e-f111-bec5-0022480be5cc" />
+        <field name="dmi_name" value="Test Record" />
+        <field name="dmi_signaltranscript" value="Test transcript text here." />
+        <field name="statecode" value="0" />
+        <field name="statuscode" value="1" />
+      </record>
+    </records>
+    <m2mrelationships />
+  </entity>
+</entities>

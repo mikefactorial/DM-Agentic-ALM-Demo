@@ -1,4 +1,51 @@
 {
-  "EnvironmentVariables": [],
-  "ConnectionReferences": []
+  "ConnectionReferences": [],
+  "Metadata": {
+    "dmi_AzureOpenAIDeployment": {
+      "displayName": "Azure OpenAI Deployment Name",
+      "schemaName": "dmi_AzureOpenAIDeployment",
+      "type": "String",
+      "defaultValue": "gpt-4o",
+      "description": ""
+    },
+    "dmi_AzureOpenAIEndpoint": {
+      "displayName": "Azure OpenAI Endpoint",
+      "schemaName": "dmi_AzureOpenAIEndpoint",
+      "type": "String",
+      "defaultValue": "https://YOUR-OPENAI-RESOURCE.openai.azure.com",
+      "description": ""
+    },
+    "dmi_FirstContactPromptTemplate": {
+      "displayName": "First Contact System Prompt Override",
+      "schemaName": "dmi_FirstContactPromptTemplate",
+      "type": "String",
+      "defaultValue": "",
+      "description": ""
+    },
+    "PD_MANAGEDIDENTITY_dmi-openai-identity": {
+      "displayName": "Managed Identity: dmi-openai-identity",
+      "schemaName": "PD_MANAGEDIDENTITY_dmi-openai-identity",
+      "type": "String",
+      "defaultValue": "",
+      "description": ""
+    }
+  },
+  "EnvironmentVariables": [
+    {
+      "SchemaName": "dmi_AzureOpenAIDeployment",
+      "Value": ""
+    },
+    {
+      "SchemaName": "dmi_AzureOpenAIEndpoint",
+      "Value": ""
+    },
+    {
+      "SchemaName": "dmi_FirstContactPromptTemplate",
+      "Value": ""
+    },
+    {
+      "SchemaName": "PD_MANAGEDIDENTITY_dmi-openai-identity",
+      "Value": ""
+    }
+  ]
 }

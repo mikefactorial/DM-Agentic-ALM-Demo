@@ -19,8 +19,8 @@ public sealed class AzureOpenAIService
 
     private const string ApiVersion = "2024-02-01";
 
-    /// <summary>The Azure Cognitive Services resource scope used when acquiring a token.</summary>
-    public const string CognitiveServicesResource = "https://cognitiveservices.azure.com";
+    /// <summary>The Azure Cognitive Services scope used when acquiring a token via IManagedIdentityService.</summary>
+    public const string CognitiveServicesResource = "https://cognitiveservices.azure.com/.default";
 
     public AzureOpenAIService(string endpoint, string deploymentName, string bearerToken)
     {

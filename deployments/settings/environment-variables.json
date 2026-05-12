@@ -6,19 +6,58 @@
       "dmi_AzureOpenAIEndpoint": "https://oai-dmdemo.openai.azure.com/",
       "dmi_AzureOpenAIDeployment": "gpt-4o-mini",
       "dmi_FirstContactPromptTemplate": "You are a space mission signal analyst. Be concise and military-precise.",
-      "PD_MANAGEDIDENTITY_dmi-openai-identity": { "applicationId": "b436340f-cf84-4144-864c-85521e880efe", "tenantId": "4e32a00f-83d6-404d-9001-251190c9385f" }
+      "PD_MANAGEDIDENTITY_dmi-openai-identity": {
+        "applicationId": "b436340f-cf84-4144-864c-85521e880efe",
+        "tenantId": "4e32a00f-83d6-404d-9001-251190c9385f"
+      }
     },
     "dmi-test": {
-      "dmi_AzureOpenAIEndpoint": "https://REPLACE_WITH_TEST_OPENAI_ENDPOINT.openai.azure.com/",
       "dmi_AzureOpenAIDeployment": "gpt-4o",
+      "dmi_AzureOpenAIEndpoint": "https://REPLACE_WITH_TEST_OPENAI_ENDPOINT.openai.azure.com/",
       "dmi_FirstContactPromptTemplate": "You are a space mission signal analyst. Be concise and military-precise.",
-      "PD_MANAGEDIDENTITY_dmi-openai-identity": { "applicationId": "REPLACE_WITH_APP_ID", "tenantId": "REPLACE_WITH_TENANT_ID" }
+      "PD_MANAGEDIDENTITY_dmi-openai-identity": {
+        "applicationId": "REPLACE_WITH_APP_ID",
+        "tenantId": "REPLACE_WITH_TENANT_ID"
+      }
     },
     "dmi-prod": {
-      "dmi_AzureOpenAIEndpoint": "https://REPLACE_WITH_PROD_OPENAI_ENDPOINT.openai.azure.com/",
       "dmi_AzureOpenAIDeployment": "gpt-4o",
+      "dmi_AzureOpenAIEndpoint": "https://REPLACE_WITH_PROD_OPENAI_ENDPOINT.openai.azure.com/",
       "dmi_FirstContactPromptTemplate": "You are a space mission signal analyst. Be concise and military-precise.",
-      "PD_MANAGEDIDENTITY_dmi-openai-identity": { "applicationId": "REPLACE_WITH_APP_ID", "tenantId": "REPLACE_WITH_TENANT_ID" }
+      "PD_MANAGEDIDENTITY_dmi-openai-identity": {
+        "applicationId": "REPLACE_WITH_APP_ID",
+        "tenantId": "REPLACE_WITH_TENANT_ID"
+      }
+    }
+  },
+  "metadata": {
+    "dmi_AzureOpenAIDeployment": {
+      "displayName": "Azure OpenAI Deployment Name",
+      "schemaName": "dmi_AzureOpenAIDeployment",
+      "type": "String",
+      "defaultValue": "gpt-4o",
+      "description": ""
+    },
+    "dmi_AzureOpenAIEndpoint": {
+      "displayName": "Azure OpenAI Endpoint",
+      "schemaName": "dmi_AzureOpenAIEndpoint",
+      "type": "String",
+      "defaultValue": "https://YOUR-OPENAI-RESOURCE.openai.azure.com",
+      "description": ""
+    },
+    "dmi_FirstContactPromptTemplate": {
+      "displayName": "First Contact System Prompt Override",
+      "schemaName": "dmi_FirstContactPromptTemplate",
+      "type": "String",
+      "defaultValue": "",
+      "description": ""
+    },
+    "PD_MANAGEDIDENTITY_dmi-openai-identity": {
+      "displayName": "Managed Identity: dmi-openai-identity",
+      "schemaName": "PD_MANAGEDIDENTITY_dmi-openai-identity",
+      "type": "String",
+      "defaultValue": "",
+      "description": ""
     }
   }
 }

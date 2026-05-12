@@ -4,5 +4,34 @@
     "SchemaName_of_EnvironmentVariable": {
       "env-slug": "value"
     }
+  },
+  "dmi_FirstContactPromptTemplate": {
+    "dmi-test": "You are a space mission signal analyst. Be concise and military-precise.",
+    "dmi-prod": "You are a space mission signal analyst. Be concise and military-precise."
+  },
+  "dmi_AzureOpenAIEndpoint": {
+    "dmi-test": "https://REPLACE_WITH_TEST_OPENAI_ENDPOINT.openai.azure.com/",
+    "dmi-prod": "https://REPLACE_WITH_PROD_OPENAI_ENDPOINT.openai.azure.com/"
+  },
+  "dmi_AzureOpenAIDeployment": {
+    "dmi-test": "gpt-4o",
+    "dmi-prod": "gpt-4o"
+  },
+  "dmi_OpenAITenantId": {
+    "dmi-test": "REPLACE_WITH_TENANT_ID",
+    "dmi-prod": "REPLACE_WITH_TENANT_ID"
+  },
+  "dmi_OpenAIClientId": {
+    "dmi-test": "REPLACE_WITH_APP_CLIENT_ID",
+    "dmi-prod": "REPLACE_WITH_APP_CLIENT_ID"
+  },
+  "dmi_OpenAIClientSecret": {
+    "dmi-test": "REPLACE_WITH_CLIENT_SECRET",
+    "dmi-prod": "REPLACE_WITH_CLIENT_SECRET"
+  },
+  "$comment_managed_identity": "PD_MANAGEDIDENTITY_ prefix instructs ManagedIdentityConfigService to update customizations.xml at deploy time.",
+  "PD_MANAGEDIDENTITY_dmi-openai-identity": {
+    "dmi-test": { "applicationId": "REPLACE_WITH_APP_ID", "tenantId": "REPLACE_WITH_TENANT_ID" },
+    "dmi-prod": { "applicationId": "REPLACE_WITH_APP_ID", "tenantId": "REPLACE_WITH_TENANT_ID" }
   }
 }

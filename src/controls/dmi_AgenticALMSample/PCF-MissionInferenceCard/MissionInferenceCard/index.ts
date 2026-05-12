@@ -1,52 +1,104 @@
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
 
+const PRIORITY_HIGH = 100000000;
+const PRIORITY_MEDIUM = 100000001;
+const PRIORITY_LOW = 100000002;
+
 export class MissionInferenceCard implements ComponentFramework.StandardControl<IInputs, IOutputs> {
-    /**
-     * Empty constructor.
-     */
+    private _container: HTMLDivElement;
+    private _card: HTMLDivElement;
+
     constructor() {
         // Empty
     }
 
-    /**
-     * Used to initialize the control instance. Controls can kick off remote server calls and other initialization actions here.
-     * Data-set values are not initialized here, use updateView.
-     * @param context The entire property bag available to control via Context Object; It contains values as set up by the customizer mapped to property names defined in the manifest, as well as utility functions.
-     * @param notifyOutputChanged A callback method to alert the framework that the control has new outputs ready to be retrieved asynchronously.
-     * @param state A piece of data that persists in one session for a single user. Can be set at any point in a controls life cycle by calling 'setControlState' in the Mode interface.
-     * @param container If a control is marked control-type='standard', it will receive an empty div element within which it can render its content.
-     */
     public init(
         context: ComponentFramework.Context<IInputs>,
         notifyOutputChanged: () => void,
         state: ComponentFramework.Dictionary,
         container: HTMLDivElement
     ): void {
-        // Add control initialization code
+        this._container = container;
+        this._card = document.createElement("div");
+        this._card.className = "mic-card";
+        this._container.appendChild(this._card);
     }
 
-
-    /**
-     * Called when any value in the property bag has changed. This includes field values, data-sets, global values such as container height and width, offline status, control metadata values such as label, visible, etc.
-     * @param context The entire property bag available to control via Context Object; It contains values as set up by the customizer mapped to names defined in the manifest, as well as utility functions
-     */
     public updateView(context: ComponentFramework.Context<IInputs>): void {
-        // Add code to update control view
+        const intent = context.parameters.intent.raw ?? "";
+        const priorityValue = context.parameters.priority.raw ?? null;
+        const actions = context.parameters.actions.raw ?? "";
+
+        this._card.innerHTML = "";
+
+        if (!intent && !actions) {
+            this._card.innerHTML = `<div class="mic-empty">Awaiting signal analysis…</div>`;
+            return;
+        }
+
+        // Priority badge
+        const { label, cssClass } = this._resolvePriority(priorityValue);
+        const badge = document.createElement("div");
+        badge.className = `mic-priority-badge mic-priority-${cssClass}`;
+        badge.textContent = `${label} Priority`;
+        this._card.appendChild(badge);
+
+        // Header
+        const header = document.createElement("div");
+        header.className = "mic-header";
+        header.textContent = "FIRST CONTACT ANALYSIS";
+        this._card.appendChild(header);
+
+        // Intent
+        if (intent) {
+            const intentRow = document.createElement("div");
+            intentRow.className = "mic-row";
+            intentRow.innerHTML = `<span class="mic-label">SIGNAL INTENT</span><span class="mic-value">${this._escape(intent)}</span>`;
+            this._card.appendChild(intentRow);
+        }
+
+        // Actions
+        if (actions) {
+            const actionsSection = document.createElement("div");
+            actionsSection.className = "mic-actions-section";
+            actionsSection.innerHTML = `<div class="mic-label">RECOMMENDED ACTIONS</div>`;
+
+            const actionList = document.createElement("ul");
+            actionList.className = "mic-action-list";
+            const actionItems = actions.split(";").map(a => a.trim()).filter(a => a.length > 0);
+            actionItems.forEach(action => {
+                const li = document.createElement("li");
+                li.textContent = action;
+                actionList.appendChild(li);
+            });
+            actionsSection.appendChild(actionList);
+            this._card.appendChild(actionsSection);
+        }
     }
 
-    /**
-     * It is called by the framework prior to a control receiving new data.
-     * @returns an object based on nomenclature defined in manifest, expecting object[s] for property marked as "bound" or "output"
-     */
     public getOutputs(): IOutputs {
         return {};
     }
 
-    /**
-     * Called when the control is to be removed from the DOM tree. Controls should use this call for cleanup.
-     * i.e. cancelling any pending remote calls, removing listeners, etc.
-     */
     public destroy(): void {
-        // Add code to cleanup control if necessary
+        // Cleanup
+    }
+
+    private _resolvePriority(value: number | null): { label: string; cssClass: string } {
+        switch (value) {
+            case PRIORITY_HIGH:   return { label: "HIGH",   cssClass: "high" };
+            case PRIORITY_MEDIUM: return { label: "MEDIUM", cssClass: "medium" };
+            case PRIORITY_LOW:    return { label: "LOW",    cssClass: "low" };
+            default:              return { label: "UNKNOWN", cssClass: "unknown" };
+        }
+    }
+
+    private _escape(text: string): string {
+        return text
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;");
     }
 }
+

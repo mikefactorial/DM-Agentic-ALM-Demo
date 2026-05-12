@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using DynamicMinds.Plugins.AgenticALMSample.Core;
 using Microsoft.Xrm.Sdk;
 
@@ -14,69 +13,42 @@ public sealed class ProcessFirstContactSignalPlugin : PluginBase
     protected override void ExecutePlugin(ILocalPluginExecutionContext localContext)
     {
         var context = localContext.PluginExecutionContext;
-        if (!context.InputParameters.Contains("dmi_transcript"))
+        var target = (Entity)context.InputParameters["Target"];
+
+        if (!target.Attributes.TryGetValue("dmi_signaltranscript", out var transcriptAttr))
         {
-            throw new InvalidPluginExecutionException("Input parameter 'dmi_transcript' is required.");
+            localContext.TracingService.Trace("dmi_signaltranscript not present on Target — skipping.");
+            return;
         }
 
-        var transcript = context.InputParameters["dmi_transcript"]?.ToString() ?? string.Empty;
-        var promptTemplate = EnvironmentVariableService.GetRequiredValue(localContext.OrganizationService, "dmi_FirstContactPromptTemplate");
-        var result = InferPriorityAndIntent(promptTemplate, transcript);
-
-        context.OutputParameters["dmi_intent"] = result.Intent;
-        context.OutputParameters["dmi_priority"] = result.PriorityOptionValue;
-        context.OutputParameters["dmi_actions"] = result.RecommendedActions;
-
-        localContext.TracingService.Trace("ProcessFirstContactSignalPlugin completed. Priority={0}, Intent={1}", result.PriorityLabel, result.Intent);
-    }
-
-    public static SignalInferenceResult InferPriorityAndIntent(string promptTemplate, string transcript)
-    {
-        // Placeholder rule-based logic for Sprint 1. This is replaced with Azure OpenAI managed identity callout in Sprint 2.
-        var lowered = transcript.ToLowerInvariant();
-
-        int priorityOptionValue;
-        string priorityLabel;
-        string intent;
-
-        if (lowered.Contains("hostile") || lowered.Contains("attack"))
+        var transcript = transcriptAttr?.ToString() ?? string.Empty;
+        if (string.IsNullOrWhiteSpace(transcript))
         {
-            priorityOptionValue = PriorityHigh;
-            priorityLabel = "High";
-            intent = "Potentially hostile";
-        }
-        else if (lowered.Contains("distress") || lowered.Contains("emergency"))
-        {
-            priorityOptionValue = PriorityHigh;
-            priorityLabel = "High";
-            intent = "Distress signal";
-        }
-        else if (lowered.Contains("diplomatic") || lowered.Contains("alliance") || lowered.Contains("envoy"))
-        {
-            priorityOptionValue = PriorityMedium;
-            priorityLabel = "Medium";
-            intent = "Diplomatic contact";
-        }
-        else
-        {
-            priorityOptionValue = PriorityLow;
-            priorityLabel = "Low";
-            intent = "Unknown intent";
+            localContext.TracingService.Trace("dmi_signaltranscript is empty — skipping.");
+            return;
         }
 
-        var actions = new List<string>
+        localContext.TracingService.Trace("Reading environment variables for Azure OpenAI.");
+        var endpoint = EnvironmentVariableService.GetRequiredValue(localContext.OrganizationService, "dmi_AzureOpenAIEndpoint");
+        var deployment = EnvironmentVariableService.GetRequiredValue(localContext.OrganizationService, "dmi_AzureOpenAIDeployment");
+        var tenantId = EnvironmentVariableService.GetRequiredValue(localContext.OrganizationService, "dmi_OpenAITenantId");
+        var clientId = EnvironmentVariableService.GetRequiredValue(localContext.OrganizationService, "dmi_OpenAIClientId");
+        var clientSecret = EnvironmentVariableService.GetRequiredValue(localContext.OrganizationService, "dmi_OpenAIClientSecret");
+        var promptTemplate = EnvironmentVariableService.GetValue(localContext.OrganizationService, "dmi_FirstContactPromptTemplate") ?? string.Empty;
+
+        localContext.TracingService.Trace("Calling Azure OpenAI deployment '{0}' at '{1}'.", deployment, endpoint);
+        var openAI = new AzureOpenAIService(endpoint, deployment, tenantId, clientId, clientSecret);
+        var result = openAI.AnalyseTranscript(promptTemplate, transcript);
+
+        localContext.TracingService.Trace("Analysis complete. Intent={0}, Priority={1}.", result.Intent, result.PriorityLabel);
+
+        var update = new Entity(target.LogicalName, target.Id)
         {
-            "Notify command immediately",
-            "Open mission review board",
-            "Attach transcript for analyst verification"
+            ["dmi_intent"] = result.Intent,
+            ["dmi_priority"] = new OptionSetValue(result.PriorityOptionValue),
+            ["dmi_actions"] = result.RecommendedActions
         };
-
-        if (!string.IsNullOrWhiteSpace(promptTemplate))
-        {
-            actions.Add("Prompt profile applied: " + promptTemplate.Substring(0, Math.Min(promptTemplate.Length, 30)) + "...");
-        }
-
-        return new SignalInferenceResult(intent, priorityLabel, priorityOptionValue, string.Join("; ", actions));
+        localContext.OrganizationService.Update(update);
     }
 
     public sealed class SignalInferenceResult

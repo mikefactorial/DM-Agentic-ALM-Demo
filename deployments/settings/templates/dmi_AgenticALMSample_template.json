@@ -1,4 +1,17 @@
 {
-  "EnvironmentVariables": [],
+  "EnvironmentVariables": [
+    {
+      "SchemaName": "dmi_AzureOpenAIEndpoint",
+      "Value": ""
+    },
+    {
+      "SchemaName": "dmi_AzureOpenAIDeployment",
+      "Value": ""
+    },
+    {
+      "SchemaName": "dmi_FirstContactPromptTemplate",
+      "Value": ""
+    }
+  ],
   "ConnectionReferences": []
 }

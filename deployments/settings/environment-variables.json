@@ -1,26 +1,24 @@
 {
-  "$comment": "Per-environment values for Dataverse environment variables. Key = schema name of the environment variable, Value = { environment-slug: value }. Updated when new environment variables are added to solutions.",
-  "$schema": {
-    "SchemaName_of_EnvironmentVariable": {
-      "env-slug": "value"
-    }
-  },
-  "dmi_FirstContactPromptTemplate": {
-    "dmi-test": "You are a space mission signal analyst. Be concise and military-precise.",
-    "dmi-prod": "You are a space mission signal analyst. Be concise and military-precise."
-  },
-  "dmi_AzureOpenAIEndpoint": {
-    "dmi-test": "https://REPLACE_WITH_TEST_OPENAI_ENDPOINT.openai.azure.com/",
-    "dmi-prod": "https://REPLACE_WITH_PROD_OPENAI_ENDPOINT.openai.azure.com/"
-  },
-  "dmi_AzureOpenAIDeployment": {
-    "dmi-test": "gpt-4o",
-    "dmi-prod": "gpt-4o"
-  },
+  "$comment": "Per-environment values for Dataverse environment variables. Keyed by environment slug, then schema name. Updated when new environment variables are added to solutions.",
   "$comment_managed_identity": "PD_MANAGEDIDENTITY_ prefix instructs ManagedIdentityConfigService to update customizations.xml at deploy time.",
-  "PD_MANAGEDIDENTITY_dmi-openai-identity": {
-    "dmi-dev": { "applicationId": "b436340f-cf84-4144-864c-85521e880efe", "tenantId": "4e32a00f-83d6-404d-9001-251190c9385f" },
-    "dmi-test": { "applicationId": "REPLACE_WITH_APP_ID", "tenantId": "REPLACE_WITH_TENANT_ID" },
-    "dmi-prod": { "applicationId": "REPLACE_WITH_APP_ID", "tenantId": "REPLACE_WITH_TENANT_ID" }
+  "environments": {
+    "dmi-dev": {
+      "dmi_AzureOpenAIEndpoint": "https://oai-dmdemo.openai.azure.com/",
+      "dmi_AzureOpenAIDeployment": "gpt-4o-mini",
+      "dmi_FirstContactPromptTemplate": "You are a space mission signal analyst. Be concise and military-precise.",
+      "PD_MANAGEDIDENTITY_dmi-openai-identity": { "applicationId": "b436340f-cf84-4144-864c-85521e880efe", "tenantId": "4e32a00f-83d6-404d-9001-251190c9385f" }
+    },
+    "dmi-test": {
+      "dmi_AzureOpenAIEndpoint": "https://REPLACE_WITH_TEST_OPENAI_ENDPOINT.openai.azure.com/",
+      "dmi_AzureOpenAIDeployment": "gpt-4o",
+      "dmi_FirstContactPromptTemplate": "You are a space mission signal analyst. Be concise and military-precise.",
+      "PD_MANAGEDIDENTITY_dmi-openai-identity": { "applicationId": "REPLACE_WITH_APP_ID", "tenantId": "REPLACE_WITH_TENANT_ID" }
+    },
+    "dmi-prod": {
+      "dmi_AzureOpenAIEndpoint": "https://REPLACE_WITH_PROD_OPENAI_ENDPOINT.openai.azure.com/",
+      "dmi_AzureOpenAIDeployment": "gpt-4o",
+      "dmi_FirstContactPromptTemplate": "You are a space mission signal analyst. Be concise and military-precise.",
+      "PD_MANAGEDIDENTITY_dmi-openai-identity": { "applicationId": "REPLACE_WITH_APP_ID", "tenantId": "REPLACE_WITH_TENANT_ID" }
+    }
   }
 }

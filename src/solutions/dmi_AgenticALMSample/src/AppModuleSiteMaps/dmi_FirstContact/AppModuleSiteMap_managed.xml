@@ -19,7 +19,11 @@
             <Title LCID="1033" Title="Subarea1" />
           </Titles>
         </SubArea>
-        <SubArea Id="subarea_b5917119" Icon="/_imgs/imagestrips/transparent_spacer.gif" Entity="dmi_firstcontact" Client="All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web" AvailableOffline="true" PassParams="false" Sku="All,OnPremise,Live,SPLA" />
+        <SubArea Id="subarea_b5917119" Icon="/_imgs/imagestrips/transparent_spacer.gif" Entity="dmi_firstcontact" Client="All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web" AvailableOffline="true" PassParams="false" Sku="All,OnPremise,Live,SPLA">
+          <Titles>
+            <Title LCID="1033" Title="Incoming Signals" />
+          </Titles>
+        </SubArea>
         <SubArea Id="subarea_425969fd" Icon="/_imgs/imagestrips/transparent_spacer.gif" Entity="dmi_signalscenario" Client="All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web" AvailableOffline="true" PassParams="false" Sku="All,OnPremise,Live,SPLA" />
       </Group>
     </Area>

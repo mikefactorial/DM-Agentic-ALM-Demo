@@ -83,7 +83,6 @@
       <RootComponent type="1" schemaName="dmi_firstcontact" behavior="0" />
       <RootComponent type="1" schemaName="dmi_signalscenario" behavior="0" />
       <RootComponent type="62" schemaName="dmi_FirstContact" behavior="0" />
-      <RootComponent type="62" schemaName="first_contact_750c7c0c" behavior="0" />
       <RootComponent type="66" schemaName="dmi_dmi.MissionInferenceCard" behavior="0" />
       <RootComponent type="80" schemaName="dmi_FirstContact" behavior="0" />
       <RootComponent type="91" id="{7bcfb707-bb4d-f111-bec6-000d3a36fbfe}" schemaName="DynamicMinds.Plugins.AgenticALMSample.FirstContact, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" behavior="0" />

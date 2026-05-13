@@ -383,8 +383,22 @@ namespace PlatformPackage
 
                     PackageLog.Log($"Decoded JSON: {json}");
 
-                    // Deserialize JSON array to list of ManagedIdentityConfig
-                    var managedIdentities = JsonConvert.DeserializeObject<List<ManagedIdentityConfig>>(json);
+                    // Deserialize JSON — handle both array ([{...}]) and single-object ({...}) formats.
+                    // PowerShell ConvertTo-Json unwraps single-element lists to a plain object, so we
+                    // normalise here rather than relying on the caller to always emit an array.
+                    List<ManagedIdentityConfig> managedIdentities;
+                    var trimmed = json.TrimStart();
+                    if (trimmed.StartsWith("["))
+                    {
+                        managedIdentities = JsonConvert.DeserializeObject<List<ManagedIdentityConfig>>(json);
+                    }
+                    else
+                    {
+                        var single = JsonConvert.DeserializeObject<ManagedIdentityConfig>(json);
+                        managedIdentities = single != null
+                            ? new List<ManagedIdentityConfig> { single }
+                            : new List<ManagedIdentityConfig>();
+                    }
 
                     if (managedIdentities == null || managedIdentities.Count == 0)
                     {

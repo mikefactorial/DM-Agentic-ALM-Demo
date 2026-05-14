@@ -1,0 +1,10 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "types": ["jest", "node", "powerapps-component-framework"]
+    },
+    "include": [
+        "MissionInferenceCard/**/*.ts",
+        "tests/**/*.ts"
+    ]
+}

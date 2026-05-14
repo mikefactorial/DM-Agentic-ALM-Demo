@@ -1,56 +1,93 @@
-# {{CLIENT_NAME}} Platform Repository
+# Dynamic Minds Agentic ALM Demo
 
-{{PRODUCT_DESCRIPTION}}
+A reference Power Platform solution that demonstrates **agentic ALM** for code-first Dataverse components. The app itself is a space-mission signal-analysis system: incoming transmissions are analysed by Azure OpenAI (accessed via Dataverse Managed Identity — no secrets), and the results are surfaced in a custom PCF card on the form.
 
 ---
 
-<!-- TEMPLATE INFO — delete this section after setup is complete -->
+## What's in this repo
 
-## About This Template
+### Solution — `dmi_AgenticALMSample`
 
-This repository contains a moderately opinionated implementation of ALM for Power Platform and GitHub using workflows and Copilot agent skills. It's intended to be a starting point for Power Platform projects that use code-first components in the platform and want to leverage agentic workflows for development and ensure those agents follow best practices for ALM and development.
+| Component type | Name | Description |
+|---------------|------|-------------|
+| **Table** | `dmi_FirstContact` (First Contact) | Records an incoming signal transmission. A plugin fires on Create to call Azure OpenAI and write back the inference results. |
+| **Table** | `dmi_signalscenario` (Signal Scenario) | Seed / reference data that drives test scenarios. Imported via Configuration Migration Tool during package deploy. |
+| **Plugin package** | `DynamicMinds.Plugins.AgenticALMSample` | NuGet-based plugin package registered in Dataverse. Contains the `Core` base library and the `FirstContact` plugin assembly. |
+| **Plugin** | `ProcessFirstContactSignalPlugin` | Post-operation Create on `dmi_FirstContact`. Reads `dmi_signaltranscript`, calls Azure OpenAI Chat Completions via `IManagedIdentityService`, and writes back `dmi_intent`, `dmi_priority`, and `dmi_actions`. |
+| **PCF control** | `MissionInferenceCard` (`dmi`) | TypeScript field control bound to `intent` (text), `priority` (option set, colour-coded badge), and `actions` (semicolon-separated list). Displayed on the First Contact form. |
+| **Environment variables** | `dmi_AzureOpenAIEndpoint`, `dmi_AzureOpenAIDeployment`, `dmi_FirstContactPromptTemplate` | Drive Azure OpenAI connectivity and the per-environment system prompt. |
 
-The template provides:
-- **Agentic setup and development** — a GitHub Copilot plugin (`power-platform-alm`) with skills that automate the full ALM lifecycle in plain English: start features, sync solutions, deploy, promote, release
-- **Feature solution isolation** — each work item gets its own Dataverse feature solution; components promote to integration when validated, keeping the main solution always releasable
-- **OIDC authentication** — GitHub Actions authenticates to Dataverse without stored secrets using federated identity credentials on Azure AD app registrations
-- **Package Deployer outer loop** — releases are versioned `.ppkg` packages that carry all solutions, deployment settings, and configuration data, deployed atomically across environments
-- **Thin caller CI/CD** — all workflow logic lives in [Agentic-ALM-Workflows](https://github.com/mikefactorial/Agentic-ALM-Workflows) (the `.platform` submodule); this repo contains only `on:` triggers and `uses:` references
+### Azure dependencies
 
-### Documentation
+| Resource | Details |
+|----------|---------|
+| Azure OpenAI | `oai-dmdemo` (`https://oai-dmdemo.openai.azure.com/`) — `gpt-4o-mini` deployment |
+| Managed Identity | App registration `756aac52-b051-4a6b-ab88-be75acc59959` (`PowerPlatform-Demo`), granted **Cognitive Services OpenAI User** on the Azure OpenAI resource. No client secrets — token acquired at runtime by `IManagedIdentityService`. |
 
-| Area | README |
-|------|--------|
-| **Feature lifecycle cheat sheet (start → release)** | **[DEVELOPER-GUIDE.md](DEVELOPER-GUIDE.md)** |
-| Solution metadata and the inner ALM loop | [src/solutions/README.md](src/solutions/README.md) |
+### How it works end-to-end
+
+```
+User creates a First Contact record (dmi_FirstContact)
+  └─▶ ProcessFirstContactSignalPlugin (post-operation, synchronous)
+        ├─ Reads dmi_signaltranscript from the Target entity
+        ├─ Fetches env vars: AzureOpenAIEndpoint, AzureOpenAIDeployment, FirstContactPromptTemplate
+        ├─ Acquires bearer token via IManagedIdentityService (no secrets)
+        ├─ Calls Azure OpenAI Chat Completions (JSON-mode)
+        └─ Writes dmi_intent, dmi_priority, dmi_actions back to the record
+              └─▶ MissionInferenceCard PCF control renders the results on the form
+```
+
+---
+
+## Documentation
+
+| Area | File |
+|------|------|
+| **Feature lifecycle (start → release)** | [DEVELOPER-GUIDE.md](DEVELOPER-GUIDE.md) |
+| Solution metadata and inner ALM loop | [src/solutions/README.md](src/solutions/README.md) |
 | Plugin development and registration | [src/plugins/README.md](src/plugins/README.md) |
 | PCF control development | [src/controls/README.md](src/controls/README.md) |
-| Environments, environment variables, connection references | [deployments/settings/README.md](deployments/settings/README.md) |
+| Environment variables and connection references | [deployments/settings/README.md](deployments/settings/README.md) |
 | Configuration and reference data | [deployments/data/README.md](deployments/data/README.md) |
 | Package Deployer project (outer loop) | [deployments/package/README.md](deployments/package/README.md) |
-| First-time setup | [SETUP.md](SETUP.md) |
-
-<!-- END TEMPLATE INFO -->
-
----
-
-## Quick Start
-
-See [SETUP.md](SETUP.md) for initial configuration steps after cloning this template.
 
 ## Repository Structure
 
 ```
 src/
-  controls/     # PCF (PowerApps Component Framework) controls
-  plugins/      # .NET plugin assemblies
-  solutions/    # Unpacked Dataverse solution metadata (.cdsproj)
+  controls/
+    dmi_AgenticALMSample/
+      PCF-MissionInferenceCard/   # TypeScript PCF control — MissionInferenceCard
+  plugins/
+    dmi_AgenticALMSample/
+      DynamicMinds.Plugins.AgenticALMSample.Core/       # Base PluginBase class, shared services
+      DynamicMinds.Plugins.AgenticALMSample.FirstContact/ # ProcessFirstContactSignalPlugin + AzureOpenAIService
+      DynamicMinds.Plugins.AgenticALMSample.FirstContact.Tests/
+  solutions/
+    dmi_AgenticALMSample/         # Unpacked solution metadata (.cdsproj)
+      src/
+        Entities/
+          dmi_FirstContact/       # First Contact table
+          dmi_signalscenario/     # Signal Scenario table
+        pluginpackages/           # Plugin package registration
+        SdkMessageProcessingSteps/ # Plugin step registrations
+        Controls/                 # PCF control registration
+        environmentvariabledefinitions/
 deployments/
-  settings/     # Deployment configuration (environment-config.json, mappings, etc.)
-  data/         # Configuration data for post-deploy import
+  settings/
+    environment-config.json       # Central config (environments, managed identities, packages)
+    environment-variables.json    # Per-environment variable values
+    connection-mappings.json      # Connection reference mappings
+    templates/                    # Auto-generated deployment settings templates (do not edit)
+  data/
+    dmi_AgenticALMSample/
+      config-data/                # Signal Scenario seed records (CMT format)
+  package/
+    Deployer/                     # Package Deployer project (outer-loop deploy)
 .github/
-  workflows/    # GitHub Actions thin-caller workflows
-  instructions/ # Copilot coding instructions
+  workflows/                      # Thin-caller GitHub Actions workflows
+  instructions/                   # Copilot coding instructions
+.platform/                        # Agentic-ALM-Workflows submodule (scripts + reusable workflows)
 ```
 
 ## Branching Strategy
@@ -60,15 +97,26 @@ main (production-ready, protected)
  ↑ PR from develop or hotfix/* only
 develop (integration branch)
  ↑ PR from feature branches / promote commits
-feature/AB<N>_Description   (branch from develop)
-hotfix/<issue-number>        (branch from main → merge to both main + develop)
+feat/GH<N>_Description   (branch from develop, e.g. feat/GH5_SpaceMissionFirstContact)
+fix/GH<N>_Description    (branch from develop)
+hotfix/<issue-number>     (branch from main → merge to both main + develop)
 ```
+
+Commit trailer format: `Closes #<N>` (GitHub Issues tracking).
+
+## Environments
+
+| Slug | Role | URL |
+|------|------|-----|
+| `dmi-dev` | Inner loop (dev + integration) | https://mikefactorialsandbox.crm.dynamics.com/ |
+| `dmi-test` | Outer loop — test | https://mikefactorialdemo.crm.dynamics.com/ |
+| `dmi-prod` | Outer loop — production | https://mikefactorialdemo.crm.dynamics.com/ |
 
 ## CI/CD
 
 All workflows are **thin callers** — they delegate to
-`mikefactorial/Agentic-ALM-Workflows`
-and only contain `on:` triggers and `uses:` references.
+[`mikefactorial/Agentic-ALM-Workflows`](https://github.com/mikefactorial/Agentic-ALM-Workflows)
+(the `.platform` submodule) and only contain `on:` triggers and `uses:` references.
 Scripts and reusable jobs live in Agentic-ALM-Workflows.
 
 | Workflow | Trigger | Purpose |

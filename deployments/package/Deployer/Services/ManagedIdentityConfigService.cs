@@ -81,19 +81,27 @@ namespace PlatformPackage.Services
                 _traceLogger.Log("Loading customizations.xml");
                 XDocument customizationsDoc = XDocument.Load(customizationsPath);
 
-                // Find the managed identity element by name
+                // Find the managed identity element by name or managedidentityid.
+                // Dataverse customizations.xml does not always include a <name> child element —
+                // in that case callers should pass the managedidentityid GUID as managedIdentityName.
                 var managedIdentityElement = customizationsDoc
                     .Descendants("managedidentities")
                     .Elements("managedidentity")
                     .FirstOrDefault(mi =>
                     {
+                        // Try <name> child element first
                         var nameElement = mi.Element("name")?.Value;
-                        return nameElement != null && nameElement.Equals(managedIdentityName, StringComparison.OrdinalIgnoreCase);
+                        if (nameElement != null && nameElement.Equals(managedIdentityName, StringComparison.OrdinalIgnoreCase))
+                            return true;
+
+                        // Fall back to managedidentityid attribute (GUID match)
+                        var idAttr = mi.Attribute("managedidentityid")?.Value;
+                        return idAttr != null && idAttr.Equals(managedIdentityName, StringComparison.OrdinalIgnoreCase);
                     });
 
                 if (managedIdentityElement == null)
                 {
-                    throw new InvalidOperationException($"Managed identity with name '{managedIdentityName}' not found in customizations.xml");
+                    throw new InvalidOperationException($"Managed identity with name or ID '{managedIdentityName}' not found in customizations.xml");
                 }
 
                 var managedIdentityId = managedIdentityElement.Attribute("managedidentityid")?.Value ?? "Unknown";

@@ -108,9 +108,9 @@ Commit trailer format: `Closes #<N>` (GitHub Issues tracking).
 
 | Slug | Role | URL |
 |------|------|-----|
-| `dmi-dev` | Inner loop (dev + integration) | https://mikefactorialsandbox.crm.dynamics.com/ |
-| `dmi-test` | Outer loop — test | https://mikefactorialdemo.crm.dynamics.com/ |
-| `dmi-prod` | Outer loop — production | https://mikefactorialdemo.crm.dynamics.com/ |
+| `dmi-dev` | Inner loop (dev + integration) | https://<dev>.crm.dynamics.com/ |
+| `dmi-test` | Outer loop — test | https://<test>.crm.dynamics.com/ |
+| `dmi-prod` | Outer loop — production | https://<prod>.crm.dynamics.com/ |
 
 ## CI/CD
 
